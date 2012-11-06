@@ -88,7 +88,7 @@
 //#define USE_V4L2
 //#define USE_KEEPON
 #define USE_THREADS
-//#define USE_BLAS
+#define USE_BLAS
 #define USE_LIBPNG
 //#define USE_MPI
 //#define USE_THREADED_WEBUI
