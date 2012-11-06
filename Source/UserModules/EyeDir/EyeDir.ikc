@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<group name="EyeDir" description="Eye direction module">
+
+  <description type="text">
+    Given pictures containing eyes, this modules will find the direction
+    of the gaze of the eyes. The output is at the moment 1, 2 or 3, which
+    indicates the direction.
+  </description>
+
+  <example description="A simple example">
+    <module
+	class="EyeDir"
+	name="EyeDir"
+	/>
+  </example>
+
+  <input name="left_eye" description="Picture of the left eye" size_x="50" size_y="50" />
+  <input name="right_eye" description="Picture of the right eye" size_x="50" size_y="50" />
+  <output name="Dir" description="Direction (1, 2 or 3)" size="1" />
+
+  <module class="EyeDir" />
+
+  <author>
+  </author>
+
+  <files>
+    <file>EyeDir.h</file>
+    <file>EyeDir.cc</file>
+    <file>EyeDir.ikc</file>
+  </files>
+
+</group>
+

@@ -10,8 +10,8 @@
     <module
     	class		 = "Dynamixel"
 		name		 = "Dynamixel"
-        device   	 = "/dev/cu.usbserial-A8006Esq"
-		_device		 = "/dev/ttyUSB0"
+        _device   	 = "/dev/cu.usbserial-A8006Esq"
+		device		 = "/dev/ttyUSB0"
 		index_mode 	 = "indirect"
 		servo_id	 = "1 2 3"
 		angle_unit 	 = "degrees"

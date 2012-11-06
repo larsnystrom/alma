@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<group name="ArmPoint" description="Calculates motorpositions">
+
+  <description type="text">
+    This module takes coordinates, and calculate how the motors in
+    a robotic arm should be positioned for the arm to point at the
+    point given by the coordinates.
+  </description>
+
+  <example description="A simple example">
+    <module
+	class="ArmPoint"
+	name="ArmPoint"
+	/>
+  </example>
+
+  <input name="depth" description="The depth of the image" size_x="640" size_y="480" />
+  <input name="POINT_POSITION" description="Coordinates of point to point at (0-1)" size="2" />
+  <output name="Positions" description="Instructions for motors" size="3" />
+
+  <module class="ArmPoint" />
+
+  <author>
+  </author>
+
+  <files>
+    <file>ArmPoint.h</file>
+    <file>ArmPoint.cc</file>
+    <file>ArmPoint.ikc</file>
+  </files>
+
+</group>
+

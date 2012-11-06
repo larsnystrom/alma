@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<group name="MyClosest" description="Finds the point closest to a Kinect">
+
+  <description type="text">
+    Finds the point closest to a Kinect, and return its coordinates.
+  </description>
+
+  <example description="A simple example">
+    <module
+	class="MyClosest"
+	name="MyClosest"
+	/>
+  </example>
+
+  <input name="depth" description="The depth of the image" size_x="640" size_y="480" />
+  <output name="ClosePosition" description="The closest point" size="2" />
+  <output name="CloseDist" description="The closest distance" size="1" />
+
+  <module class="MyClosest" />
+
+  <author>
+  </author>
+
+  <files>
+    <file>MyClosest.h</file>
+    <file>MyClosest.cc</file>
+    <file>MyClosest.ikc</file>
+  </files>
+
+</group>
+
