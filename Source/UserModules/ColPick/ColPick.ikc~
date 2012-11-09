@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<group name="ColPick" description="picking a column from a matrix">
+
+  <description type="text">
+    ...
+  </description>
+
+  <example description="A simple example">
+    <module
+	class="ColPick"
+	name="ColPick"
+	/>
+  </example>
+
+  <input name="PICT" description="Picture" size_x="50" size_y="50" />
+  <output name="COL" description="The column" size="50" />
+
+  <parameter name="mode" type="int" default="0"  description="The orientation" />
+  <parameter name="uLimit" type="int" default="25" description="Upper limit of column to average over." />
+  <parameter name="lLimit" type="int" default="25" description="Lower limit of column to average over." />
+
+  <module class="ColPick" />
+
+  <author>
+  </author>
+
+  <files>
+    <file>ColPick.h</file>
+    <file>ColPick.cc</file>
+    <file>ColPick.ikc</file>
+  </files>
+
+</group>
+

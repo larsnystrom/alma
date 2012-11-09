@@ -9,9 +9,15 @@ class EyeDir: public Module
 
   float ** le;
   float ** re;
-  float * dir;
-  int size_x;
-  int size_y;
+  //float * dir;
+  float * coll1;
+  float * colr1;
+  float * coll2;
+  float * colr2;
+  float * stdl1;
+  float * stdl2;
+  float * stdr1;
+  float * stdr2;
 
   static Module * Create(Parameter * p) { return new EyeDir(p); }
 
