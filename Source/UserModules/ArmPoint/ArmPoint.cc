@@ -21,7 +21,10 @@ ArmPoint::Tick()
   int x = (int) (PP[0]*size_x);
   int y = (int) (PP[1]*size_y);
 
-  if(depth[y][x]< 0.9999 && depth[y][x]>0){//if raw data from kinect
+  if(PP[2]>0){
+    d=PP[2];
+  }
+  else if(depth[y][x]< 0.9999 && depth[y][x]>0){//if raw data from kinect
     d = depth[y][x];
     //d = 1.0 / (d*1023 * -0.0030711016 + 3.3309495161);//Probably not so good
     //d = 0.1236 * tanf(d*1023/2842.5 + 1.1863);

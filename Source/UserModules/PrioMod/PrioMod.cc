@@ -19,8 +19,6 @@ PrioMod::Init(){
   maxMarkers = 10;
   clocam = GetInputArray("CLOSEST");
   attended = GetOutputArray("ATTENDED");
-  //distended = GetOutputArray("ATTENDED");
-  //distended[0] = -1.0;
 }
 
 void
@@ -30,7 +28,7 @@ PrioMod::Tick(){
     if(dist(markers[i][0], markers[i][1], clocam[0], clocam[1])<oldClo){
       attended[0]=markers[i][0];
       attended[1]=markers[i][1];
-      //distended[0] = markers[i][];
+      attended[2]=markers[i][23];
       oldClo=dist(markers[i][0], markers[i][1], clocam[0], clocam[1]);
     }
   }
