@@ -14,7 +14,6 @@ public:
     void Init();
     void Tick();
 
-    //float * distended;
     int maxMarkers;
 
     float ** markers;

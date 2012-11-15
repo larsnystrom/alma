@@ -15,9 +15,8 @@
   </example>
 
   <input name="ATTENDABLES" description="Table where each row descibes a detected marker: camera position (2 columns), id (1 column), confidence (1 columns), edges (8 columns), transformation matrix (16 columns)" size_x="28" size_param_y="max_markers" />
-  <!--output name="DISTENDED" description="Distance to the attended object" size="1" /-->
   <input name="CLOSEST" description="The closest point" size="2" />
-  <output name="ATTENDED" description="The attended object" size="2" />x
+  <output name="ATTENDED" description="The attended object" size="3" />
 
   <module class="PrioMod" />
 

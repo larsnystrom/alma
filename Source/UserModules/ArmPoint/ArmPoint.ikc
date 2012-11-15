@@ -16,7 +16,7 @@
   </example>
 
   <input name="depth" description="The depth of the image" size_x="640" size_y="480" />
-  <input name="POINT_POSITION" description="Coordinates of point to point at (0-1)" size="2" />
+  <input name="POINT_POSITION" description="Coordinates of point to point at (0-1)" size="3" />
   <output name="Positions" description="Instructions for motors" size="3" />
 
   <module class="ArmPoint" />
