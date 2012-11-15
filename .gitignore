@@ -6,6 +6,11 @@
 *.exe
 *.o
 *.so
+Bin/
+
+# Make files #
+##############
+Build/
 
 # Packages #
 ############

@@ -6,6 +6,7 @@ add_subdirectory(ArmPoint)
 add_subdirectory(EyeDir)
 add_subdirectory(MyClosest)
 add_subdirectory(PrioMod)
+add_subdirectory(HeadPose)
 
 add_subdirectory(ColPick)
 

@@ -159,7 +159,10 @@ target_link_libraries(ikaros ${EXTRA_LIBS} )
 # Ikaros modules' include directories and libraires
 set(MODULES_INCLUDS ${MODULES_INCLUDS})
 set(MODULES_LIBS ${MODULES_LIBS})
+set(MODULES_LIBS_DIR ${MODULES_LIBS_DIR})
+
 include_directories(${MODULES_INCLUDS})
+link_directories(${MODULES_LIBS_DIR})
 target_link_libraries (ikaros ${MODULES_LIBS})
   add_dependencies(ikaros MPIFaceDetector)
 #foreach(f ${INCLUDE_DIRECTORIES}) 

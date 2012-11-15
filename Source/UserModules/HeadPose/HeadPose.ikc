@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<group name="HeadPose" description="Head Pose Estimation">
+
+	<description type="text">
+		Head Pose Estimation.
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="HeadPose"
+			name="HeadPose"
+		/>
+	</example>
+
+	<module class="HeadPose" />
+
+	<author>
+		<name>Christian Balkenius</name>
+		<email>christian.balkenius@lucs.lu.se</email>
+		<affiliation>Lund University Cognitive Science</affiliation>
+		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+	</author>
+
+   <files>
+   		<file>HeadPose.h</file>
+   		<file>HeadPose.cc</file>
+   		<file>HeadPose.ikc</file>
+   </files>
+
+</group>
+
