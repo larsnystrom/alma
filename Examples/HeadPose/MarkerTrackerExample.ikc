@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<group title = "Head Pose Estimation Example">
+    <description>
+		This is a test file to try the HeadPose module.
+    </description>
+    
+    <module 
+        class       = "Kinect"
+        name        = "Kinect"
+    />
+    
+  <!-- Artoolkit -->
+    <module
+        class       = "MarkerTracker"
+        name        = "MarkerTracker"			
+    />
+      
+    <connection sourcemodule = "Kinect" source="INTENSITY" targetmodule = "MarkerTracker" target="INPUT" delay="0" />
+</group>

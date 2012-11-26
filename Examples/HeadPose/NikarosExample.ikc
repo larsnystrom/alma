@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<group title = "Head Pose Estimation Example">
+    <description>
+		This is a test file to try the HeadPose module.
+    </description>
+    
+    <module
+    	class		 = "Nikaros"
+		name		 = "Nikaros"
+	/>
+</group>

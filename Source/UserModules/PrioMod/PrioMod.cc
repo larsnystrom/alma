@@ -4,27 +4,13 @@
 using namespace ikaros;
 
 float
-dist(float x1, float y1, float z1, float x2, float y2, float z2){
+PrioMod::dist(float x1, float y1, float z1, float x2, float y2, float z2){
   float d;
 
   d = pow((x1-x2),2) + pow((y1-y2),2) + pow((z1-z2),2);
   d = sqrt(d);
 
   return d;
-}
-
-/**
- *Ex:
- *1=Head center
- *2=Face center
- *3=AR-tagg location
- **/
-float
-linePlaneIntersect(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3){
-  float num = x1*((z3/x3)+(z3*y3)/(2*x3*x3)+z3/(2*x3*x3))-y1*(z3/(2*x3))-z1-z3/(2*x3);
-  float denom = z2-z1-(x2-x1)*((z3/x3)+(z3*y3)/(2*x3*x3)+z3/(2*x3*x3))+(y2-y1)*(z3/(2*x3));
-  float dl = dist((x1+(num/denom)*(x2-x1)), (y1+(num/denom)*(y2-y1)), (z1+(num/denom)*(z2-z1)), x3, y3, z3);
-  return dl;
 }
 
 void

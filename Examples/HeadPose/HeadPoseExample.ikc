@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<group title = "Head Pose Estimation Example">
+    <description>
+		This is a test file to try the HeadPose module.
+    </description>
+    
+    <module
+    	class		 = "HeadPose"
+		name		 = "HeadPose"
+	/>
+	
+	<module
+	    class       = "PrioMod"
+	    name        = "PrioMod"
+    />
+    
+    <module 
+        class       = "Nikaros"
+        name        = "Nikaros"
+    />
+    
+  <!-- Artoolkit -->
+  <module
+      class = "MarkerTracker"
+      name = "MarkerTracker"			
+      />
+      
+      <connection sourcemodule = "Nikaros" source="INTENSITY" targetmodule = "MarkerTracker" target="INPUT" delay="0" />
+      
+      <connection sourcemodule = "MarkerTracker" source = "MARKERS" targetmodule = "PrioMod" target = "ATTENDABLES" delay="0" />
+	
+	<connection sourcemodule = "HeadPose" source = "HEAD_CENTER" targetmodule = "PrioMod" target = "HEAD_CENTER" delay="0" />
+	<connection sourcemodule = "HeadPose" source = "HEAD_FRONT" targetmodule = "PrioMod" target = "HEAD_FRONT" delay="0" />
+</group>

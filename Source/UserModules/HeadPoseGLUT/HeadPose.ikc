@@ -6,10 +6,14 @@
 		Head Pose Estimation.
 	</description>
 
+	<example description="A simple example">
+		<module
+			class="HeadPose"
+			name="HeadPose"
+		/>
+	</example>
+
 	<module class="HeadPose" />
-    
-	<output name="HEAD_CENTER" description="Position of head center" size="3" />
-	<output name="HEAD_FRONT" description="Position of head front" size="3" />
 
 	<author>
 		<name>Christian Balkenius</name>

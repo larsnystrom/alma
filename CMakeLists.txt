@@ -66,7 +66,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
     endif ()
     
     if (GCC_VERSION VERSION_EQUAL 4.6)	        
-    	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -D__STDC_CONSTANT_MACROS")
 	endif ()
 	if (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7)	        
    	 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")

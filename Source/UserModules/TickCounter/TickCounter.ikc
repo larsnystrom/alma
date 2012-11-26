@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<group name="TickCounter" description="Tick counter">
+
+	<description type="text">
+		Counts ticks.
+	</description>
+
+	<module class="TickCounter" />
+	<output name="COUNT" description="Tick count" size="1" />
+
+   <files>
+   		<file>TickCounter.h</file>
+   		<file>TickCounter.cc</file>
+   		<file>TickCounter.ikc</file>
+   </files>
+
+</group>
+

@@ -7,8 +7,13 @@ add_subdirectory(EyeDir)
 add_subdirectory(MyClosest)
 add_subdirectory(PrioMod)
 add_subdirectory(HeadPose)
+add_subdirectory(TickCounter)
+add_subdirectory(PrioModHead)
 
 add_subdirectory(ColPick)
+
+add_subdirectory(Nikaros)
+add_subdirectory(OpenNi)
 
 set(SOURCE ${SOURCE} PARENT_SCOPE)
 set(MODULES_INCLUDS ${MODULES_INCLUDS} PARENT_SCOPE)
