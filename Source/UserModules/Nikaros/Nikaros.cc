@@ -60,7 +60,7 @@ void
 Nikaros::Tick()
 {
     // Wait for new data to be available
-    niRetVal = niContext.WaitNoneUpdateAll();
+    niRetVal = niContext.WaitAndUpdateAll();
     if (niRetVal != XN_STATUS_OK)
     {
 	    printf("Failed updating data: %s\n", xnGetStatusString(niRetVal));
@@ -72,19 +72,22 @@ Nikaros::Tick()
     
     const XnRGB24Pixel* pImageSingleData = niImageMD.RGB24Data();
 
+    
+    const float c1255 = 1.0/255.0;
+    
     for (XnUInt j=0; j<niImageMD.YRes();j++){
         for (XnUInt i=0; i<niImageMD.XRes();i++,  pImageSingleData++){
-            red[j][i] = static_cast<float>(pImageSingleData->nRed);
-            green[j][i] = static_cast<float>(pImageSingleData->nGreen);
-            blue[j][i] = static_cast<float>(pImageSingleData->nBlue);
+            red[j][i] = c1255 * static_cast<float>(pImageSingleData->nRed);
+            green[j][i] = c1255 * static_cast<float>(pImageSingleData->nGreen);
+            blue[j][i] = c1255 * static_cast<float>(pImageSingleData->nBlue);
             
-            intensity[j][i] = (red[j][i] + green[j][i] + blue[j][i]) / 3;
+            intensity[j][i] = (red[j][i] + green[j][i] + blue[j][i]) / 3.0;
             
 //            printf(
-//                "%u - %u - %u\n", pImageSingleData ->nRed,
-//                pImageSingleData->nGreen, pImageSingleData->nBlue
+//                "%f %f %f\n", red[j][i], green[j][i], blue[j][i]
 //            );
         }
+//        printf("\n");
     }
 }
 
