@@ -21,6 +21,10 @@ private:
         initialized = false;
     }
     
+    ~OpenNi() {
+        niContext.Release();
+    }
+    
     // Dont forget to declare these two. You want to make sure they
     // are unaccessable otherwise you may accidently get copies of
     // your singleton appearing.

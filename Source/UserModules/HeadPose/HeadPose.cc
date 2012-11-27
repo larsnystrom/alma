@@ -257,6 +257,7 @@ HeadPose::Tick()
                 i, out_head_front[0], out_head_front[1], out_head_front[2]
             );
 	    */
+	    }
     }
 }
 
