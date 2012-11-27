@@ -42,7 +42,7 @@ MarkerMemory::Tick()
 {
     for (int i = 0; i < maxMarkers; i++) {
         bool in_memory = false;
-        if (fabsf(input[i][2] - 0.f) > 0.1f) {
+        if (input[i][2] > 0.1f) {
         
             for (int k = 0; k < maxMarkers; k++) {
             
