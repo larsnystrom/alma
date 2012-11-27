@@ -18,58 +18,7 @@
 #include "./../OpenNi/OpenNi.h"
 #include <libgen.h> 
 
-// Path to trees
-std::string g_treepath;
-// Number of trees
-int g_ntrees;
-// Patch width
-int g_p_width;
-// Patch height
-int g_p_height;
-//maximum distance form the sensor - used to segment the person
-int g_max_z = 0;
-//head threshold - to classify a cluster of votes as a head
-int g_th = 400;
-//threshold for the probability of a patch to belong to a head
-float g_prob_th = 1.0f;
-//threshold on the variance of the leaves
-float g_maxv = 1000.f;
-//stride (how densely to sample test patches - increase for higher speed)
-int g_stride = 5;
-//radius used for clustering votes into possible heads
-float g_larger_radius_ratio = 1.f;
-//radius used for mean shift
-float g_smaller_radius_ratio = 6.f;
-
-//pointer to the actual estimator
-CRForestEstimator* g_Estimate;
-//input 3D image
-cv::Mat g_im3D;
-//input image size
-int g_im_w = 640;
-int g_im_h = 480;
-//kinect's frame rate
-int g_fps = 30;
-
-XnUInt64 g_focal_length;
-XnDouble g_pixel_size;
-
-xn::Context g_Context;
-xn::DepthGenerator g_DepthGenerator;
-
-xn::DepthMetaData g_depthMD;
-
-XnStatus g_RetVal;
-
-std::vector< cv::Vec<float,POSE_SIZE> > g_means; //outputs
-std::vector< std::vector< Vote > > g_clusters; //full clusters of votes
-std::vector< Vote > g_votes; //all votes returned by the forest
-
-math_vector_3f g_face_curr_dir, g_face_dir(0,0,-1);
-
-
-
-
+math_vector_3f                              hpFaceCurrDir,hpFaceDir(0,0,-1);
 
 /*
 // Authors: Gabriele Fanelli, Thibaut Weise, Juergen Gall, BIWI, ETH Zurich
@@ -125,109 +74,103 @@ math_vector_3f g_face_curr_dir, g_face_dir(0,0,-1);
 void
 HeadPose::Init()
 {
-//    g_context = OpenNi::niContext;
     OpenNi& on = OpenNi::getInstance();
-    g_Context = on.getContext();
-    
+    xnContext = on.getContext();
     
     // Load Config
-
     const char* file = __FILE__;
     char* dFile = strdup(file);
     dFile = strcat(dirname(dFile), "/trees/tree");
     
-	g_treepath = dFile;
+	hpTreepath = dFile;
 	free(dFile);
 	
-	g_ntrees = 10;
-	g_maxv = 800;
-	g_larger_radius_ratio = 1.6;
-	g_smaller_radius_ratio = 5;
-	g_stride = 5;
-	g_max_z = 1300;
-	g_th = 500;
+	hpNTrees = 10;
+	hpMaxV = 800;
+	hpLargerRadiusRatio = 1.6;
+	hpSmallerRadiusRatio = 5;
+	hpStride = 5;
+	hpMaxZ = 1300;
+	hpTh = 500;
 
 	std::cout << std::endl << "------------------------------------" << std::endl << std::endl;
 	std::cout << "Estimation:       " << std::endl;
-	std::cout << "Trees:            " << g_ntrees << " " << g_treepath << std::endl;
-	std::cout << "Stride:           " << g_stride << std::endl;
-	std::cout << "Max Variance:     " << g_maxv << std::endl;
-	std::cout << "Max Distance:     " << g_max_z << std::endl;
-	std::cout << "Head Threshold:   " << g_th << std::endl;
+	std::cout << "Trees:            " << hpNTrees << " " << hpTreepath << std::endl;
+	std::cout << "Stride:           " << hpStride << std::endl;
+	std::cout << "Max Variance:     " << hpMaxV << std::endl;
+	std::cout << "Max Distance:     " << hpMaxZ << std::endl;
+	std::cout << "Head Threshold:   " << hpTh << std::endl;
 
 	std::cout << std::endl << "------------------------------------" << std::endl << std::endl;
 	
 	
-	g_Estimate =  new CRForestEstimator();
-	if( !g_Estimate->loadForest(g_treepath.c_str(), g_ntrees) ){
+	hpEstimator =  new CRForestEstimator();
+	if( !hpEstimator->loadForest(hpTreepath.c_str(), hpNTrees) ){
 
 		std::cerr << "could not read forest!" << std::endl;
 		exit(-1);
 	}
 
-	
     std::cout << "initializing kinect... " << std::endl;
 
     // Initialize context object
-    g_RetVal = g_Context.Init();
+    xnRetVal = xnContext.Init();
 
-    g_RetVal = g_DepthGenerator.Create(g_Context);
-    if (g_RetVal != XN_STATUS_OK)
-	    printf("Failed creating DEPTH generator %s\n", xnGetStatusString(g_RetVal));
+    xnRetVal = xnDepthGenerator.Create(xnContext);
+    if (xnRetVal != XN_STATUS_OK)
+	    printf("Failed creating DEPTH generator %s\n", xnGetStatusString(xnRetVal));
 
     XnMapOutputMode outputMode;
-    outputMode.nXRes = g_im_w;
-    outputMode.nYRes = g_im_h;
-    outputMode.nFPS = g_fps;
-    g_RetVal = g_DepthGenerator.SetMapOutputMode(outputMode);
-    if (g_RetVal != XN_STATUS_OK)
-	    printf("Failed setting the DEPTH output mode %s\n", xnGetStatusString(g_RetVal));
+    outputMode.nXRes = hpImW;
+    outputMode.nYRes = hpImH;
+    outputMode.nFPS = hpFps;
+    xnRetVal = xnDepthGenerator.SetMapOutputMode(outputMode);
+    if (xnRetVal != XN_STATUS_OK)
+	    printf("Failed setting the DEPTH output mode %s\n", xnGetStatusString(xnRetVal));
 
-    g_RetVal = g_Context.StartGeneratingAll();
-    if (g_RetVal != XN_STATUS_OK)
-	    printf("Failed starting generating all %s\n", xnGetStatusString(g_RetVal));
+    xnRetVal = xnContext.StartGeneratingAll();
+    if (xnRetVal != XN_STATUS_OK)
+	    printf("Failed starting generating all %s\n", xnGetStatusString(xnRetVal));
 
     // get the focal length in mm (ZPS = zero plane distance)
-    g_DepthGenerator.GetIntProperty ("ZPD", g_focal_length);
+    xnDepthGenerator.GetIntProperty ("ZPD", xnFocalLength);
     // get the pixel size in mm ("ZPPS" = pixel size at zero plane)
-    g_DepthGenerator.GetRealProperty ("ZPPS", g_pixel_size);
-    g_pixel_size *= 2.f;
+    xnDepthGenerator.GetRealProperty ("ZPPS", xnPixelSize);
+    xnPixelSize *= 2.f;
 
-    g_im3D.create(g_im_h,g_im_w,CV_32FC3);
+    hpIm3D.create(hpImH,hpImW,CV_32FC3);
     
     out_head_center = GetOutputArray("HEAD_CENTER");
     out_head_front = GetOutputArray("HEAD_FRONT");
-    
 }
-
 
 
 void
 HeadPose::Tick()
 {
     // Wait for new data to be available
-    g_RetVal = g_Context.WaitNoneUpdateAll();
-    if (g_RetVal != XN_STATUS_OK)
+    xnRetVal = xnContext.WaitNoneUpdateAll();
+    if (xnRetVal != XN_STATUS_OK)
     {
-	    printf("Failed updating data: %s\n", xnGetStatusString(g_RetVal));
+	    printf("Failed updating data: %s\n", xnGetStatusString(xnRetVal));
 	    return;
     }
 
     // Take current depth map
-    g_DepthGenerator.GetMetaData(g_depthMD);
+    xnDepthGenerator.GetMetaData(xnDepthMD);
 
-    float f = g_focal_length/g_pixel_size;
+    float f = xnFocalLength/xnPixelSize;
     int valid_pixels = 0;
 
     //generate 3D image
-    for(int y = 0; y < g_im3D.rows; y++)
+    for(int y = 0; y < hpIm3D.rows; y++)
     {
-	    cv::Vec3f* Mi = g_im3D.ptr<cv::Vec3f>(y);
-	    for(int x = 0; x < g_im3D.cols; x++){
+	    cv::Vec3f* Mi = hpIm3D.ptr<cv::Vec3f>(y);
+	    for(int x = 0; x < hpIm3D.cols; x++){
 
-		    float d = (float)g_depthMD(x,y);
+		    float d = (float)xnDepthMD(x,y);
 
-		    if ( d < g_max_z && d > 0 ){
+		    if ( d < hpMaxZ && d > 0 ){
 
 			    valid_pixels++;
 
@@ -242,41 +185,41 @@ HeadPose::Tick()
 	    }
     }
     
-    g_means.clear();
-    g_votes.clear();
-    g_clusters.clear();
+    hpMeans.clear();
+    hpVotes.clear();
+    hpClusters.clear();
 
     //do the actual estimation
-    g_Estimate->estimate( 	g_im3D,
-						    g_means,
-						    g_clusters,
-						    g_votes,
-						    g_stride,
-						    g_maxv,
-						    g_prob_th,
-						    g_larger_radius_ratio,
-						    g_smaller_radius_ratio,
+    hpEstimator->estimate( 	hpIm3D,
+						    hpMeans,
+						    hpClusters,
+						    hpVotes,
+						    hpStride,
+						    hpMaxV,
+						    hpProbTh,
+						    hpLargerRadiusRatio,
+						    hpSmallerRadiusRatio,
 						    false,
-						    g_th
+						    hpTh
 					    );
     
     //draw head poses
-    if(g_means.size()>0){
+    if(hpMeans.size()>0){
 
 	    float mult = 0.0174532925f;
 
-	    for(unsigned int i=0;i<g_means.size();++i){
+	    for(unsigned int i=0;i<hpMeans.size();++i){
 
 		    rigid_motion<float> rm;
-		    rm.m_rotation = euler_to_rotation_matrix( mult*g_means[i][3], mult*g_means[i][4], mult*g_means[i][5] );
-		    math_vector_3f head_center( g_means[i][0], g_means[i][1], g_means[i][2] );
+		    rm.m_rotation = euler_to_rotation_matrix( mult*hpMeans[i][3], mult*hpMeans[i][4], mult*hpMeans[i][5] );
+		    math_vector_3f head_center( hpMeans[i][0], hpMeans[i][1], hpMeans[i][2] );
 
-		    g_face_curr_dir = rm.m_rotation * (g_face_dir);
-		    math_vector_3f head_front(head_center + 150.f*g_face_curr_dir);
+		    hpFaceCurrDir = rm.m_rotation * (hpFaceDir);
+		    math_vector_3f head_front(head_center + 150.f*hpFaceCurrDir);
             
-//            printf("[%d]ZPD: %llu \t ZPPS: %f\n", i, g_focal_length, g_pixel_size);
-//            printf("[%d]head_center: (%f, %f, %f)\n", i, head_center[0], head_center[1], head_center[2]);
-//            printf("[%d]head_front:  (%f, %f, %f)\n\n", i, head_front[0], head_front[1], head_front[2]);
+            printf("[%d]ZPD: %llu \t ZPPS: %f\n", i, xnFocalLength, xnPixelSize);
+            printf("[%d]head_center: (%f, %f, %f)\n", i, head_center[0], head_center[1], head_center[2]);
+            printf("[%d]head_front:  (%f, %f, %f)\n\n", i, head_front[0], head_front[1], head_front[2]);
             
             if (0 == i) {
                 out_head_center[0] = head_center[0];
