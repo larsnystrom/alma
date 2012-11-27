@@ -1,5 +1,7 @@
 #include "HeadPose.h"
 
+#include <math.h>
+
 //#include <string>
 //#include <algorithm>
 //#include <iostream>
@@ -130,7 +132,7 @@ HeadPose::Init()
     
     
     // Load Config
-	g_treepath = "/home/lars/alma/ikaros/Source/UserModules/HeadPose/trees/tree";
+	g_treepath = "/home/lars/ikaros/alma/Source/UserModules/HeadPose/trees/tree";
 	g_ntrees = 10;
 	g_maxv = 800;
 	g_larger_radius_ratio = 1.6;
@@ -190,9 +192,21 @@ HeadPose::Init()
     out_head_center = GetOutputArray("HEAD_CENTER");
     out_head_front = GetOutputArray("HEAD_FRONT");
     
+    out_head_center2 = GetOutputArray("HEAD_CENTER2");
+    out_head_front2 = GetOutputArray("HEAD_FRONT2");
 }
 
+float
+xCon(float xi, float zi){
+  float xo = (320*xi)/(zi*tan(0.4974)) + 320;
+  return xo;
+}
 
+float
+yCon(float yi, float zi){
+  float yo = (240*yi)/(zi*tan(0.3752)) + 240;
+  return yo;
+}
 
 void
 HeadPose::Tick()
@@ -267,17 +281,23 @@ HeadPose::Tick()
 		    math_vector_3f head_front(head_center + 150.f*g_face_curr_dir);
             
 //            printf("[%d]ZPD: %llu \t ZPPS: %f\n", i, g_focal_length, g_pixel_size);
-//            printf("[%d]head_center: (%f, %f, %f)\n", i, head_center[0], head_center[1], head_center[2]);
-//            printf("[%d]head_front:  (%f, %f, %f)\n\n", i, head_front[0], head_front[1], head_front[2]);
+            printf("[%d]head_center: (%f, %f, %f)\n", i, head_center[0], head_center[1], head_center[2]);
+            printf("[%d]head_front:  (%f, %f, %f)\n", i, head_front[0], head_front[1], head_front[2]);
             
             if (0 == i) {
-                out_head_center[0] = head_center[0];
-                out_head_center[1] = head_center[1];
+	        out_head_center[0] = xCon(head_center[0], head_center[2])/640;
+	        out_head_center[1] = yCon(head_center[1], head_center[2])/480;
                 out_head_center[2] = head_center[2];
-                out_head_front[0] = head_front[0];
-                out_head_front[1] = head_front[1];
+                out_head_front[0] = xCon(head_front[0], head_front[2])/640;
+                out_head_front[1] = yCon(head_front[1], head_front[2])/480;
                 out_head_front[2] = head_front[2];
+		out_head_center2[0] = out_head_center[0]/640;
+		out_head_center2[1] = out_head_center[1]/480;
+		out_head_front2[0] = out_head_front[0]/640;
+		out_head_front2[1] =out_head_front[1]/480;
             }
+            printf("[%d]out_head_center: (%f, %f, %f)\n", i, out_head_center[0], out_head_center[1], out_head_center[2]);
+            printf("[%d]out_head_front:  (%f, %f, %f)\n\n", i, out_head_front[0], out_head_front[1], out_head_front[2]);
 	    }
 
     }
