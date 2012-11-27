@@ -5,6 +5,7 @@
 #include <XnCppWrapper.h>
 #include "CRForestEstimator.h"
 #include "rigid_motion.hpp"
+#include "./../OpenNi/OpenNi.h"
 
 class HeadPose: public Module
 {
@@ -29,12 +30,30 @@ public:
         hpImW = 640;
         hpImH = 480;
         hpFps = 30;
+        
+        OpenNi& on = OpenNi::getInstance();
+        xnContext = on.getContext();
+        
+        xnRetVal = xnDepthGenerator.Create(xnContext);
+        if (xnRetVal != XN_STATUS_OK)
+	        printf("Failed creating DEPTH generator %s\n", xnGetStatusString(xnRetVal));
+
+        XnMapOutputMode outputMode;
+        outputMode.nXRes = hpImW;
+        outputMode.nYRes = hpImH;
+        outputMode.nFPS = hpFps;
+        xnRetVal = xnDepthGenerator.SetMapOutputMode(outputMode);
+        if (xnRetVal != XN_STATUS_OK)
+	        printf("Failed setting the DEPTH output mode %s\n", xnGetStatusString(xnRetVal));
     }
     virtual ~HeadPose() {}
 
     void 		Init();
     void 		Tick();
 private:
+    float xCon(float xi, float zi);
+    float yCon(float yi, float zi);
+
     XnUInt64            xnFocalLength;
     XnDouble            xnPixelSize;
     xn::Context         xnContext;

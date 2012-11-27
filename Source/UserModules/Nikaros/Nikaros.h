@@ -26,6 +26,7 @@
 
 #include "IKAROS.h"
 #include <XnCppWrapper.h>
+#include "./../OpenNi/OpenNi.h"
 
 
 class Nikaros: public Module
@@ -38,7 +39,15 @@ public:
     
     static Module * Create(Parameter * p) { return new Nikaros(p); }
 
-    Nikaros(Parameter * p) : Module(p) {}
+    Nikaros(Parameter * p) : Module(p) 
+    {
+        OpenNi& on = OpenNi::getInstance();
+        niContext = on.getContext();
+        // SETUP IMAGE GENERATOR
+        niRetVal = niImageGenerator.Create(niContext);
+        if (niRetVal != XN_STATUS_OK)
+	        printf("Failed creating IMAGE generator %s\n", xnGetStatusString(niRetVal));
+    }
     virtual ~Nikaros() {}
 
     void 		Init();

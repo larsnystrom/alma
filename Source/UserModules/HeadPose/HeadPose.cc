@@ -8,16 +8,12 @@
 //#include <vector>
 //#include "freeglut.h"
 //#include <XnOS.h>
-#include <XnCppWrapper.h>
 //#include <XnCodecIDs.h>
 
-#include "CRForestEstimator.h"
 
 //#include "vector.hpp"
 //#include "matrix.hpp"
-#include "rigid_motion.hpp"
 
-#include "./../OpenNi/OpenNi.h"
 #include <libgen.h> 
 
 math_vector_3f                              hpFaceCurrDir,hpFaceDir(0,0,-1);
@@ -76,16 +72,12 @@ math_vector_3f                              hpFaceCurrDir,hpFaceDir(0,0,-1);
 void
 HeadPose::Init()
 {
-    OpenNi& on = OpenNi::getInstance();
-    xnContext = on.getContext();
-    
     // Load Config
     const char* file = __FILE__;
     char* dFile = strdup(file);
     dFile = strcat(dirname(dFile), "/trees/tree");
     
 	hpTreepath = dFile;
-	free(dFile);
 	
 	hpNTrees = 10;
 	hpMaxV = 800;
@@ -105,34 +97,14 @@ HeadPose::Init()
 
 	std::cout << std::endl << "------------------------------------" << std::endl << std::endl;
 	
-	
 	hpEstimator =  new CRForestEstimator();
 	if( !hpEstimator->loadForest(hpTreepath.c_str(), hpNTrees) ){
-
 		std::cerr << "could not read forest!" << std::endl;
 		exit(-1);
 	}
 
-    std::cout << "initializing kinect... " << std::endl;
-
-    // Initialize context object
-    xnRetVal = xnContext.Init();
-
-    xnRetVal = xnDepthGenerator.Create(xnContext);
-    if (xnRetVal != XN_STATUS_OK)
-	    printf("Failed creating DEPTH generator %s\n", xnGetStatusString(xnRetVal));
-
-    XnMapOutputMode outputMode;
-    outputMode.nXRes = hpImW;
-    outputMode.nYRes = hpImH;
-    outputMode.nFPS = hpFps;
-    xnRetVal = xnDepthGenerator.SetMapOutputMode(outputMode);
-    if (xnRetVal != XN_STATUS_OK)
-	    printf("Failed setting the DEPTH output mode %s\n", xnGetStatusString(xnRetVal));
-
-    xnRetVal = xnContext.StartGeneratingAll();
-    if (xnRetVal != XN_STATUS_OK)
-	    printf("Failed starting generating all %s\n", xnGetStatusString(xnRetVal));
+    OpenNi& on = OpenNi::getInstance();
+    on.StartGeneratingAll();
 
     // get the focal length in mm (ZPS = zero plane distance)
     xnDepthGenerator.GetIntProperty ("ZPD", xnFocalLength);
@@ -150,13 +122,13 @@ HeadPose::Init()
 }
 
 float
-xCon(float xi, float zi){
+HeadPose::xCon(float xi, float zi){
   float xo = (320*xi)/(zi*tan(0.4974)) + 320;
   return xo;
 }
 
 float
-yCon(float yi, float zi){
+HeadPose::yCon(float yi, float zi){
   float yo = (240*yi)/(zi*tan(0.3752)) + 240;
   return yo;
 }

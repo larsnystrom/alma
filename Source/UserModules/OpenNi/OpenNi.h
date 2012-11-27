@@ -15,10 +15,12 @@ public:
     }
     
     xn::Context getContext();
+    void        StartGeneratingAll();
     
 private:
     OpenNi() {
         niContext.Init();
+        niRetVal = XN_STATUS_OK;
         printf("\nOpenNI: Context setup...\n");
     }
     
@@ -34,6 +36,8 @@ private:
     void operator=(OpenNi const&); // Don't implement
     
     xn::Context         niContext;
+    bool                started;
+    XnStatus            niRetVal;
 };
 
 #endif

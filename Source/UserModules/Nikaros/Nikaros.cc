@@ -22,8 +22,6 @@
 
 
 #include "Nikaros.h"
-#include <XnCppWrapper.h>
-#include "./../OpenNi/OpenNi.h"
 
 using namespace ikaros;
 
@@ -31,21 +29,9 @@ using namespace ikaros;
 void
 Nikaros::Init()
 {
-    // Initialize context object
-//    niRetVal = niContext.Init();
-    OpenNi& on = OpenNi::getInstance();
-    niContext = on.getContext();
-
-    // SETUP IMAGE GENERATOR
-    niRetVal = niImageGenerator.Create(niContext);
-    if (niRetVal != XN_STATUS_OK)
-	    printf("Failed creating IMAGE generator %s\n", xnGetStatusString(niRetVal));
-    
-    
     // START GENERATING
-    niRetVal = niContext.StartGeneratingAll();
-    if (niRetVal != XN_STATUS_OK)
-	    printf("Failed starting generating all %s\n", xnGetStatusString(niRetVal));
+    OpenNi& on = OpenNi::getInstance();
+    on.StartGeneratingAll();
     
     // GET OUTPUT
     intensity   = GetOutputMatrix("INTENSITY");
@@ -60,7 +46,7 @@ void
 Nikaros::Tick()
 {
     // Wait for new data to be available
-    niRetVal = niContext.WaitAndUpdateAll();
+    niRetVal = niContext.WaitNoneUpdateAll();
     if (niRetVal != XN_STATUS_OK)
     {
 	    printf("Failed updating data: %s\n", xnGetStatusString(niRetVal));
