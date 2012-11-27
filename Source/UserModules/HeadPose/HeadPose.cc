@@ -234,8 +234,8 @@ HeadPose::Tick()
 		    math_vector_3f head_front(head_center + 150.f*hpFaceCurrDir);
             
 //            printf("[%d]ZPD: %llu \t ZPPS: %f\n", i, g_focal_length, g_pixel_size);
-            printf("[%d]head_center: (%f, %f, %f)\n", i, head_center[0], head_center[1], head_center[2]);
-            printf("[%d]head_front:  (%f, %f, %f)\n", i, head_front[0], head_front[1], head_front[2]);
+//            printf("[%d]head_center: (%f, %f, %f)\n", i, head_center[0], head_center[1], head_center[2]);
+//            printf("[%d]head_front:  (%f, %f, %f)\n", i, head_front[0], head_front[1], head_front[2]);
             
             if (0 == i) {
                 out_head_center[0] = xCon(head_center[0], head_center[2])/640;
@@ -244,19 +244,19 @@ HeadPose::Tick()
                 out_head_front[0] = xCon(head_front[0], head_front[2])/640;
                 out_head_front[1] = yCon(head_front[1], head_front[2])/480;
                 out_head_front[2] = head_front[2];
-                out_head_center2[0] = out_head_center[0]/640;
-                out_head_center2[1] = out_head_center[1]/480;
-                out_head_front2[0] = out_head_front[0]/640;
-                out_head_front2[1] =out_head_front[1]/480;
+                out_head_center2[0] = out_head_center[0];
+                out_head_center2[1] = out_head_center[1];
+                out_head_front2[0] = out_head_front[0];
+                out_head_front2[1] =out_head_front[1];
             }
+	    /*
             printf("[%d]out_head_center: (%f, %f, %f)\n", 
                 i, out_head_center[0], out_head_center[1], out_head_center[2]
             );
-            printf("[%d]out_head_front:  (%f, %f, %f)\n\n", 
+            printf("[%d]out_head_front:  (%f, %f, %f)\n", 
                 i, out_head_front[0], out_head_front[1], out_head_front[2]
             );
-	    }
-
+	    */
     }
 }
 
