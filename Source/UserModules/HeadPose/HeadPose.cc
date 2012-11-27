@@ -18,6 +18,7 @@
 #include "rigid_motion.hpp"
 
 #include "./../OpenNi/OpenNi.h"
+#include <libgen.h> 
 
 // Path to trees
 std::string g_treepath;
@@ -132,7 +133,14 @@ HeadPose::Init()
     
     
     // Load Config
-	g_treepath = "/home/lars/ikaros/alma/Source/UserModules/HeadPose/trees/tree";
+
+    const char* file = __FILE__;
+    char* dFile = strdup(file);
+    dFile = strcat(dirname(dFile), "/trees/tree");
+    
+	g_treepath = dFile;
+	free(dFile);
+	
 	g_ntrees = 10;
 	g_maxv = 800;
 	g_larger_radius_ratio = 1.6;
