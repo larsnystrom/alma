@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<group name="MarkerMemory" description="minimal example module">
+
+	<description type="text">
+		Minimal module that can be used as a start for a new module.
+		Simply change all occurrences of "MarkerMemory" to the name of your new module in
+		MarkerMemory.cc, MarkerMemory.h and MarkerMemory.ikc (this file), rename the files, and fill
+		in the new code and documentation. This module is located in the
+		UserModules directory.
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="MarkerMemory"
+			name="MarkerMemory"
+		/>
+	</example>
+
+	<module class="MarkerMemory" />
+	
+	<parameter name="max_markers" type="int" default="10" description="Maximum number of markers to remember" />
+	
+	<input 
+	    name="MARKERS" 
+	    description="Table where each row descibes a detected marker: camera position (2 columns), id (1 column), confidence (1 columns), edges (8 columns), transformation matrix (16 columns)" 
+	    size_x="28" 
+	    size_param_y="max_markers" 
+    />
+    
+    <output 
+        name="MEMORY" 
+        description="Output table where each row descibes a remembered marker: camera position (2 columns), id (1 column), confidence (1 columns), edges (8 columns), transformation matrix (16 columns)" 
+        size_x="28" 
+        size_param_y="max_markers" 
+    />
+
+	<author>
+		<name>Christian Balkenius</name>
+		<email>christian.balkenius@lucs.lu.se</email>
+		<affiliation>Lund University Cognitive Science</affiliation>
+		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+	</author>
+
+   <files>
+   		<file>MarkerMemory.h</file>
+   		<file>MarkerMemory.cc</file>
+   		<file>MarkerMemory.ikc</file>
+   </files>
+
+</group>
+

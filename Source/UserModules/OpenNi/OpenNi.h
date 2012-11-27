@@ -18,11 +18,13 @@ public:
     
 private:
     OpenNi() {
-        initialized = false;
+        niContext.Init();
+        printf("\nOpenNI: Context setup...\n");
     }
     
     ~OpenNi() {
         niContext.Release();
+        printf("\nOpenNI: Context shutdown.\n\n");
     }
     
     // Dont forget to declare these two. You want to make sure they
@@ -31,7 +33,6 @@ private:
     OpenNi(OpenNi const&);              // Don't Implement
     void operator=(OpenNi const&); // Don't implement
     
-    bool initialized;
     xn::Context         niContext;
 };
 
