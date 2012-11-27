@@ -5,3 +5,26 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/OpenNi.cc
 	PARENT_SCOPE
 )
+
+
+#modify according to your OpenNI installation
+SET( OPENNI_INCLUDES /usr/include/ni ) 
+SET( OPENNI_LIB /usr/bin ) 
+
+SET(MODULES_INCLUDS
+    ${MODULES_INCLUDS}
+    ${OPENNI_INCLUDES}
+    PARENT_SCOPE
+)
+
+SET(MODULES_LIBS_DIR
+    ${MODULES_LIBS_DIR}
+    ${OPENNI_LIB}
+    PARENT_SCOPE
+)
+
+SET(MODULES_LIBS
+    ${MODULES_LIBS}
+    OpenNI
+    PARENT_SCOPE
+)
