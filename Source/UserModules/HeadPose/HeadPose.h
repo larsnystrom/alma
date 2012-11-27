@@ -11,6 +11,8 @@ class HeadPose: public Module
 public:
     float* out_head_center;
     float* out_head_front;
+    float* out_head_center2;
+    float* out_head_front2;
 
     static Module * Create(Parameter * p) { return new HeadPose(p); }
 

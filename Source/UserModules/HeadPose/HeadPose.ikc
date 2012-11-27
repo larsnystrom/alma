@@ -10,6 +10,8 @@
     
 	<output name="HEAD_CENTER" description="Position of head center" size="3" />
 	<output name="HEAD_FRONT" description="Position of head front" size="3" />
+	<output name="HEAD_CENTER2" description="Position of head center" size="2" />
+	<output name="HEAD_FRONT2" description="Position of head front" size="2" />
 
 	<author>
 		<name>Christian Balkenius</name>
