@@ -14,7 +14,7 @@ class ArmPoint: public Module
   int size_x;
   int size_y;
   float h;
-  int hv;
+  float hv;
 
   static Module * Create(Parameter * p) { return new ArmPoint(p); }
 

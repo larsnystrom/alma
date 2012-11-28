@@ -11,8 +11,8 @@ ArmPoint::Init()
     size_y = GetInputSizeY("depth");//480
     PP =  GetInputArray("POINT_POSITION");
     motor_position = GetOutputArray("Positions");
-    h = 0.18;//Camera position
-    hv = 20;//Camera angle
+    h = 0.18f;//Camera position
+    hv = 0.21f; //Camera angle = 12 deg == 12/180*3.14 rad
 }
 
 void
@@ -42,7 +42,7 @@ ArmPoint::Tick()
     float v2 = 180;
     float v3 = 180;
 
-    float th = -43*(PP[1]-0.5)*3.14/180-hv;
+    float th = ((-43)*(PP[1]-0.5)*3.14/180) + hv;
 
     motor_position[0] = v1-57*(PP[0]-0.5);
     motor_position[1] = v2;
