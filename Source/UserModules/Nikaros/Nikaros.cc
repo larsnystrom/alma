@@ -38,6 +38,7 @@ Nikaros::Init()
     red			= GetOutputMatrix("RED");
     green		= GetOutputMatrix("GREEN");
     blue		= GetOutputMatrix("BLUE");
+    depth       = GetOutputMatrix("DEPTH");
 }
 
 
@@ -57,9 +58,8 @@ Nikaros::Tick()
     niImageGenerator.GetMetaData(niImageMD);
     
     const XnRGB24Pixel* pImageSingleData = niImageMD.RGB24Data();
-
     
-    const float c1255 = 1.0/255.0;
+    const float c1255 = 1.0f / 255.0f;
     
     for (XnUInt j=0; j<niImageMD.YRes();j++){
         for (XnUInt i=0; i<niImageMD.XRes();i++,  pImageSingleData++){
@@ -67,13 +67,25 @@ Nikaros::Tick()
             green[j][i] = c1255 * static_cast<float>(pImageSingleData->nGreen);
             blue[j][i] = c1255 * static_cast<float>(pImageSingleData->nBlue);
             
-            intensity[j][i] = (red[j][i] + green[j][i] + blue[j][i]) / 3.0;
+            intensity[j][i] = (red[j][i] + green[j][i] + blue[j][i]) / 3.0f;
             
 //            printf(
 //                "%f %f %f\n", red[j][i], green[j][i], blue[j][i]
 //            );
         }
 //        printf("\n");
+    }
+    
+    // Take current depth map
+    niDepthGenerator.GetMetaData(niDepthMD);
+    
+    for (int y = 0; y < niDepthYRes; y++) {
+	    for (int x = 0; x < niDepthXRes; x++) {
+	        depth[y][x] = float(niDepthMD(x,y));
+//	        if (x % 50 == 0 && depth[y][x] > 0.01f) {
+//                printf("[%d][%d]: %f\n", y, x, depth[y][x]);
+//            }
+	    }
     }
 }
 

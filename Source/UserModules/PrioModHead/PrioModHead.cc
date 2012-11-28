@@ -7,7 +7,7 @@ float
 PrioModHead::dist(float x1, float y1, float z1, float x2, float y2, float z2){
   float d;
 
-  d = pow((x1-x2),2) + pow((y1-y2),2) + pow((z1-z2),2);
+  d = pow((x1-x2), 2) + pow((y1-y2), 2) + pow((z1-z2), 2);
   d = sqrt(d);
 
   return d;
@@ -51,8 +51,8 @@ PrioModHead::Init(){
 
 void
 PrioModHead::Tick(){
-    float curDist = 0.0;
-    float minDist = 50000.0;
+    float curDist = 0.0f;
+    float minDist = 50000.0f;
     int prioMarker = -1;
     for (int i = 0; i < maxMarkers; ++i) {
         
@@ -83,10 +83,21 @@ PrioModHead::Tick(){
         attended[1] = markers[prioMarker][1];
         attended[2] = markers[prioMarker][23] / 1000.f;
     } else {
-        printf("MarkerNotAttended\n");
-        attended[0] = 0.8f;
-        attended[1] = 0.5f;
-        attended[2] = 2.0f;
+        attended[0] = head_center[0];
+        attended[1] = head_center[1];
+        attended[2] = head_center[2];
+        printf(
+            "MarkerNotAttended: Looking at head(%f, %f, %f)\n",
+            attended[0], attended[1], attended[2]
+        );
+        
+//        attended[0] = 0.5f;
+//        attended[1] = 0.8f;
+//        attended[2] = 2.0f;
+//        printf(
+//            "MarkerNotAttended: Looking forward(%f, %f, %f)\n",
+//            attended[0], attended[1], attended[2]
+//        );
     }
   
 }

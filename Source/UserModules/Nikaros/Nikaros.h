@@ -36,6 +36,7 @@ public:
     float **		red;
     float **		green;
     float **		blue;
+    float **        depth;
     
     static Module * Create(Parameter * p) { return new Nikaros(p); }
 
@@ -47,6 +48,19 @@ public:
         niRetVal = niImageGenerator.Create(niContext);
         if (niRetVal != XN_STATUS_OK)
 	        printf("Failed creating IMAGE generator %s\n", xnGetStatusString(niRetVal));
+        
+        
+        niRetVal = niDepthGenerator.Create(niContext);
+        if (niRetVal != XN_STATUS_OK)
+	        printf("Failed creating DEPTH generator %s\n", xnGetStatusString(niRetVal));
+
+        XnMapOutputMode outputMode;
+        outputMode.nXRes = niDepthXRes;
+        outputMode.nYRes = niDepthYRes;
+        outputMode.nFPS = niDepthFPS;
+        niRetVal = niDepthGenerator.SetMapOutputMode(outputMode);
+        if (niRetVal != XN_STATUS_OK)
+	        printf("Failed setting the DEPTH output mode %s\n", xnGetStatusString(niRetVal));
     }
     virtual ~Nikaros() {}
 
@@ -58,6 +72,12 @@ private:
     xn::ImageGenerator  niImageGenerator;
     XnStatus            niRetVal;
     xn::ImageMetaData   niImageMD;
+    xn::DepthGenerator  niDepthGenerator;
+    xn::DepthMetaData   niDepthMD;
+    
+    static const int niDepthXRes = 640;
+    static const int niDepthYRes = 480;
+    static const int niDepthFPS = 30;
 };
 
 #endif
