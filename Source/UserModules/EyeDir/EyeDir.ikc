@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 
-<group name="EyeDir" description="Eye direction module">
+<group name="EyeDir" description="eye direction module">
 
   <description type="text">
-    Given pictures containing eyes, this modules will find the direction
-    of the gaze of the eyes. The output is at the moment 1, 2 or 3, which
-    indicates the direction.
+    ...
   </description>
 
   <example description="A simple example">
@@ -17,16 +15,26 @@
 
   <input name="left_eye" description="Picture of the left eye" size_x="50" size_y="50" />
   <input name="right_eye" description="Picture of the right eye" size_x="50" size_y="50" />
-  <!--output name="Dir" description="Direction" size="2" /-->
+
+  <output name="left_eye_out" description="Picture of the left eye" size_x="50" size_y="20" />
+  <output name="right_eye_out" description="Picture of the right eye" size_x="50" size_y="20" />
+
+  <output name="Dir" description="Direction" size="2" />
+
   <output name="COLL1" description="Direction" size="50" />
   <output name="COLR1" description="Direction" size="50" />
   <output name="COLL2" description="Direction" size="50" />
   <output name="COLR2" description="Direction" size="50" />
+  <output name="COLL3" description="Direction" size="50" />
+  <output name="COLR3" description="Direction" size="50" />
 
   <output name="STDL1" description="Direction" size="50" />
   <output name="STDR1" description="Direction" size="50" />
-  <output name="STDL2" description="Direction" size="50" />
-  <output name="STDR2" description="Direction" size="50" />
+  <output name="STDL3" description="Direction" size="50" />
+  <output name="STDR3" description="Direction" size="50" />
+
+  <output name="left_eye_marked" description="Marked picture of the left eye" size_x="50" size_y="50" />
+  <output name="right_eye_marked" description="Marked picture of the right eye" size_x="50" size_y="50" />
 
   <module class="EyeDir" />
 
