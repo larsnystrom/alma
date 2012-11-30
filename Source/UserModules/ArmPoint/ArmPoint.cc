@@ -1,5 +1,6 @@
 #include "ArmPoint.h"
 #include "math.h"
+#define _USE_MATH_DEFINES
 
 using namespace ikaros;
 
@@ -10,9 +11,15 @@ ArmPoint::Init()
     size_x = GetInputSizeX("depth");//640
     size_y = GetInputSizeY("depth");//480
     PP =  GetInputArray("POINT_POSITION");
+    
     motor_position = GetOutputArray("Positions");
+    
+    int tilt = GetIntValue("TILT");
+    
     h = 0.18f;//Camera position
-    hv = 0.21f; //Camera angle = 12 deg == 12/180*3.14 rad
+    hv = float(tilt) / 180.f * float(M_PI); //Camera angle = 12 deg == 12/180*3.14 rad
+    
+    printf("ArmPoint: tilt=%d hv=%f\n", tilt, hv);
 }
 
 void
