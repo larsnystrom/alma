@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<group name="FingerPose" description="None">
+
+  <example description="A simple example">
+    <module
+	class="FingerPose"
+	name="FingerPose"
+	/>
+  </example>
+
+  <input name="HAND_POSITION" description="The position of the hand" size="3" />
+  <input name="DEPTH" description="The depth of the image" size_x="640" size_y="480" />
+  <output name="POINT_VECTOR" description="Two points on the vector" size_x="3" size_y="2" />
+
+  <output name="VP1" description="Two points on the vector" size="2" />
+  <output name="VP2" description="Two points on the vector" size="2" />
+
+  <module class="FingerPose" />
+
+  <files>
+    <file>FingerPose.h</file>
+    <file>FingerPose.cc</file>
+    <file>FingerPose.ikc</file>
+  </files>
+
+</group>
+
