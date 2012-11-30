@@ -88,7 +88,7 @@ HandPoint::Tick()
 		XnPoint3D point = *last;
 		
 		handPoint[0] = xCon(point.X, point.Z);
-		handPoint[1] = yCon(point.Y, point.Z);
+		handPoint[1] = yCon(-point.Y, point.Z);
 		handPoint[2] = point.Z;
 		
 		handPointView[0] = handPoint[0] / 640.f;
