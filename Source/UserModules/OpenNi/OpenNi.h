@@ -1,6 +1,10 @@
 #ifndef OpenNi_
 #define OpenNi_
 
+//---------------------------------------------------------------------------
+// Defines
+//---------------------------------------------------------------------------
+#define SAMPLE_XML_PATH "./../Source/UserModules/OpenNi/SamplesConfig.xml"
 
 #include <XnCppWrapper.h>
 
@@ -19,8 +23,19 @@ public:
     
 private:
     OpenNi() {
-        niContext.Init();
+	    xn::EnumerationErrors	errors;
         niRetVal = XN_STATUS_OK;
+        
+	    niRetVal = niContext.InitFromXmlFile(SAMPLE_XML_PATH, niScriptNode, &errors);
+	    if (niRetVal == XN_STATUS_NO_NODE_PRESENT)
+	    {
+		    XnChar strError[1024];
+		    errors.ToString(strError, 1024);
+		    printf("%s\n", strError);
+//    		return (niRetVal);
+	    }
+	    
+//        niContext.Init();
         printf("\nOpenNI: Context setup...\n");
     }
     
@@ -38,6 +53,7 @@ private:
     xn::Context         niContext;
     bool                started;
     XnStatus            niRetVal;
+    xn::ScriptNode	    niScriptNode;
 };
 
 #endif
