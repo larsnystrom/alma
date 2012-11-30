@@ -37,6 +37,7 @@ public:
     float **		green;
     float **		blue;
     float **        depth;
+    float **        depthNorm;
     
     static Module * Create(Parameter * p) { return new Nikaros(p); }
 

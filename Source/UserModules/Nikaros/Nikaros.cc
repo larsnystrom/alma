@@ -39,6 +39,7 @@ Nikaros::Init()
     green		= GetOutputMatrix("GREEN");
     blue		= GetOutputMatrix("BLUE");
     depth       = GetOutputMatrix("DEPTH");
+    depthNorm    = GetOutputMatrix("DEPTH_NORM");
 }
 
 
@@ -82,9 +83,7 @@ Nikaros::Tick()
     for (int y = 0; y < niDepthYRes; y++) {
 	    for (int x = 0; x < niDepthXRes; x++) {
 	        depth[y][x] = float(niDepthMD(x,y));
-//	        if (x % 50 == 0 && depth[y][x] > 0.01f) {
-//                printf("[%d][%d]: %f\n", y, x, depth[y][x]);
-//            }
+	        depthNorm[y][x] = depth[y][x] / 10000.f;
 	    }
     }
 }

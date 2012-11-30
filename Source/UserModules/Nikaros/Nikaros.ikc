@@ -15,6 +15,7 @@
 	<output name="GREEN" description="The green channel of the image" size_x="640" size_y="480" />
 	<output name="BLUE" description="The blue channel of the image" size_x="640" size_y="480" />
 	<output name="DEPTH" description="The depth image" size_x="640" size_y="480" />
+	<output name="DEPTH_NORM" description="The normalized depth image" size_x="640" size_y="480" />
 
 
    <files>
