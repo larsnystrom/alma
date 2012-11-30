@@ -41,18 +41,22 @@ PrioModHead::linePlaneIntersect(
 void
 PrioModHead::Init(){
     maxMarkers = GetIntValue("max_markers");
+    headPoseAttendMaxDist = GetFloatValue("HEAD_ATTEND_MAX_DIST");
+    
+    printf("PrioModHead: HEAD_ATTEND_MAX_DIST=%f\n", headPoseAttendMaxDist);
     
     markers = GetInputMatrix("ATTENDABLES");
     head_center = GetInputArray("HEAD_CENTER");
     head_front = GetInputArray("HEAD_FRONT");
     
     attended = GetOutputArray("ATTENDED");
+    attendedView = GetOutputArray("ATTENDED_VIEW");
 }
 
 void
 PrioModHead::Tick(){
     float curDist = 0.0f;
-    float minDist = 50000.0f;
+    float minDist = headPoseAttendMaxDist;
     int prioMarker = -1;
     for (int i = 0; i < maxMarkers; ++i) {
         
@@ -67,9 +71,6 @@ PrioModHead::Tick(){
                 prioMarker = i;
                 minDist = curDist;
             }
-            
-            printf("Marker: %f to marker[%f], minDist: %f\n", curDist, markers[i][2], minDist);
-            
         }
     }
     if (prioMarker != -1) {
@@ -99,6 +100,9 @@ PrioModHead::Tick(){
 //            attended[0], attended[1], attended[2]
 //        );
     }
+    
+    attendedView[0] = attended[0];
+    attendedView[1] = attended[1];
   
 }
 

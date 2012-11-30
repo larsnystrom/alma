@@ -24,6 +24,9 @@ public:
     float * attended;
     float * head_center;
     float * head_front;
+    float * attendedView;
+private:
+    float headPoseAttendMaxDist;
 };
 
 #endif
