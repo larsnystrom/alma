@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<group name="HandPoint" description="minimal example module">
+
+	<description type="text">
+		Minimal module that can be used as a start for a new module.
+		Simply change all occurrences of "HandPoint" to the name of your new module in
+		HandPoint.cc, HandPoint.h and HandPoint.ikc (this file), rename the files, and fill
+		in the new code and documentation. This module is located in the
+		UserModules directory.
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="HandPoint"
+			name="HandPoint"
+		/>
+	</example>
+
+	<module class="HandPoint" />
+	
+	<output name="HAND_POINT" description="Position of hand" size="3" />
+	<output name="HAND_POINT_VIEW" description="Position of hand (x, y)" size="2" />
+
+	<author>
+		<name>Christian Balkenius</name>
+		<email>christian.balkenius@lucs.lu.se</email>
+		<affiliation>Lund University Cognitive Science</affiliation>
+		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+	</author>
+
+   <files>
+   		<file>HandPoint.h</file>
+   		<file>HandPoint.cc</file>
+   		<file>HandPoint.ikc</file>
+   </files>
+
+</group>
+
