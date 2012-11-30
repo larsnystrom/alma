@@ -45,9 +45,16 @@ MarkerMemory::Tick()
         if (input[i][2] > 0.1f) {
         
             for (int k = 0; k < maxMarkers; k++) {
-            
+                
+//                printf("MarkerMemoryInput[%d]: %f(%f, %f, %f)\n", i, input[i][2],
+//                    input[i][0], input[i][1], input[i][23] / 1000.f
+//                );
+                
                 if (fabsf(input[i][2] - memory[k][2]) < 0.1f) {
                     aCpy(memory[k], input[i]);
+//                    printf("MarkerMemory[%d]: %f(%f, %f, %f)\n", k, memory[k][2],
+//                        memory[k][0], memory[k][1], memory[k][23] / 1000.f
+//                    );
                     in_memory = true;
                     
                     break;
@@ -56,7 +63,9 @@ MarkerMemory::Tick()
             
             if (in_memory == false) {
                 aCpy(memory[lastIndex], input[i]);
-                printf("MarkerMemory[%d]: %f\n", lastIndex, memory[lastIndex][2]);
+//                printf("MarkerMemory[%d]: %f(%f, %f, %f)\n", lastIndex, memory[lastIndex][2],
+//                    memory[lastIndex][0], memory[lastIndex][1], memory[lastIndex][23] / 1000.f
+//                );
                 
                 lastIndex++;
                 if (lastIndex >= maxMarkers) {
@@ -68,10 +77,10 @@ MarkerMemory::Tick()
     }
 }
 
-void MarkerMemory::aCpy(float* a, float* b)
+void MarkerMemory::aCpy(float* dest, float* source)
 {
-    for (int k = 0; k < sizeof(b); k++) {
-        a[k] = b[k];
+    for (int k = 0; k < 28; k++) {
+        dest[k] = source[k];
     }
 }
 
