@@ -87,12 +87,12 @@ HandPoint::Tick()
 		TrailIterator last = trail.Begin();
 		XnPoint3D point = *last;
 		
-		handPoint[0] = xCon(point.X, point.Z);
-		handPoint[1] = yCon(-point.Y, point.Z);
-		handPoint[2] = point.Z;
+		handPoint[0] = xCon(point.X, point.Z) / 640.f;
+		handPoint[1] = yCon(-point.Y, point.Z) / 480.f;
+		handPoint[2] = point.Z / 1000.f;
 		
-		handPointView[0] = handPoint[0] / 640.f;
-		handPointView[1] = handPoint[1] / 480.f;
+		handPointView[0] = handPoint[0];
+		handPointView[1] = handPoint[1];
 		
 		printf("HandPoint: (%f, %f, %f)\t\t(%f, %f, %f)\n", point.X, point.Y, point.Z, handPoint[0], handPoint[1], handPoint[2]);
 	}

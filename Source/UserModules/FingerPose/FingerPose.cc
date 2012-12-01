@@ -6,7 +6,8 @@ void
 FingerPose::Init()
 {
   depth = GetInputMatrix("DEPTH");
-  pv = GetOutputMatrix("POINT_VECTOR");
+  pvh = GetOutputMatrix("POINT_VECTOR_HAND");
+  pvf = GetOutputMatrix("POINT_VECTOR_FINGER");
   hp = GetInputArray("HAND_POSITION");
   vp1 = GetOutputArray("VP1");
   vp2 = GetOutputArray("VP2");
@@ -15,10 +16,10 @@ FingerPose::Init()
 void
 FingerPose::Tick()
 {
-  pv[0][0] = hp[0];
-  pv[0][1] = hp[1];
-  pv[0][2] = hp[2];
-  //pv[0][2] = hp[23]/1000;
+  pvh[0] = hp[0];
+  pvh[1] = hp[1];
+  pvh[2] = hp[2];
+  //pvh[2] = hp[23]/1000;
 
   float fl = 0.15;
   float r = fl/((hp[2])*tan(0.4974));
@@ -29,20 +30,20 @@ FingerPose::Tick()
   int y1 = max(0, (int)((hp[1]-r)*480+0.5));
   int y2 = min(480, (int)((hp[1]+r)*480+0.5));
 
-  pv[1][2]=5.0;
+  pvf[2]=5.f;
   for(int j=y1; j<y2; j++){
     for(int i=x1; i<x2; i++){
-      if((depth[j][i])/1000<pv[1][2] && (depth[j][i])/1000>0.0){
-	pv[1][0] = (float)(i)/640.f;
-	pv[1][1] = (float)(j)/480.f;
-	pv[1][2] = (depth[j][i])/1000;
+      if((depth[j][i])/1000<pvf[2] && (depth[j][i])/1000>0.0){
+	pvf[0] = (float)(i)/640.f;
+	pvf[1] = (float)(j)/480.f;
+	pvf[2] = (depth[j][i])/1000;
       }
     }
   }
-  vp1[0] = pv[0][0];
-  vp1[1] = pv[0][1];
-  vp2[0] = pv[1][0];
-  vp2[1] = pv[1][1];
+  vp1[0] = pvh[0];
+  vp1[1] = pvh[1];
+  vp2[0] = pvf[0];
+  vp2[1] = pvf[1];
 }
 
 

@@ -11,10 +11,11 @@
 
   <input name="HAND_POSITION" description="The position of the hand" size="3" />
   <input name="DEPTH" description="The depth of the image" size_x="640" size_y="480" />
-  <output name="POINT_VECTOR" description="Two points on the vector" size_x="3" size_y="2" />
+  <output name="POINT_VECTOR_HAND" description="First point on the vector" size="3" />
+  <output name="POINT_VECTOR_FINGER" description="Second point on the vector" size="3" />
 
-  <output name="VP1" description="Two points on the vector" size="2" />
-  <output name="VP2" description="Two points on the vector" size="2" />
+  <output name="VP1" description="First point on the vector" size="2" />
+  <output name="VP2" description="Second point on the vector" size="2" />
 
   <module class="FingerPose" />
 

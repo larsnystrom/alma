@@ -11,7 +11,8 @@ class FingerPose: public Module
  FingerPose(Parameter * p) : Module(p) {}
   virtual ~FingerPose() {}
 
-  float ** pv;
+  float * pvh;
+  float * pvf;
   float ** depth;
   float * hp;
 

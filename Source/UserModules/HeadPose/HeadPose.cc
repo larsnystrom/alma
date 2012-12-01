@@ -210,12 +210,12 @@ HeadPose::Tick()
 //            printf("[%d]head_front:  (%f, %f, %f)\n", i, head_front[0], head_front[1], head_front[2]);
             
             if (0 == i) {
-                out_head_center[0] = xCon(head_center[0], head_center[2])/640;
-                out_head_center[1] = yCon(head_center[1], head_center[2])/480;
-                out_head_center[2] = head_center[2];
-                out_head_front[0] = xCon(head_front[0], head_front[2])/640;
-                out_head_front[1] = yCon(head_front[1], head_front[2])/480;
-                out_head_front[2] = head_front[2];
+                out_head_center[0] = xCon(head_center[0], head_center[2])/640.f;
+                out_head_center[1] = yCon(head_center[1], head_center[2])/480.f;
+                out_head_center[2] = head_center[2]/1000.f;
+                out_head_front[0] = xCon(head_front[0], head_front[2])/640.f;
+                out_head_front[1] = yCon(head_front[1], head_front[2])/480.f;
+                out_head_front[2] = head_front[2]/1000.f;
                 out_head_center2[0] = out_head_center[0];
                 out_head_center2[1] = out_head_center[1];
                 out_head_front2[0] = out_head_front[0];
