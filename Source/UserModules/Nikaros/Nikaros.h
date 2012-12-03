@@ -45,23 +45,18 @@ public:
     {
         OpenNi& on = OpenNi::getInstance();
         niContext = on.getContext();
-        // SETUP IMAGE GENERATOR
-        niRetVal = niImageGenerator.Create(niContext);
-        if (niRetVal != XN_STATUS_OK)
-	        printf("Failed creating IMAGE generator %s\n", xnGetStatusString(niRetVal));
         
-        
-        niRetVal = niDepthGenerator.Create(niContext);
-        if (niRetVal != XN_STATUS_OK)
-	        printf("Failed creating DEPTH generator %s\n", xnGetStatusString(niRetVal));
+        niRetVal = niContext.FindExistingNode(XN_NODE_TYPE_DEPTH, niDepthGenerator);
+	    if (niRetVal != XN_STATUS_OK)
+	    {
+		    printf("No depth node exists! Check your XML.");
+	    }
 
-        XnMapOutputMode outputMode;
-        outputMode.nXRes = niDepthXRes;
-        outputMode.nYRes = niDepthYRes;
-        outputMode.nFPS = niDepthFPS;
-        niRetVal = niDepthGenerator.SetMapOutputMode(outputMode);
-        if (niRetVal != XN_STATUS_OK)
-	        printf("Failed setting the DEPTH output mode %s\n", xnGetStatusString(niRetVal));
+	    niRetVal = niContext.FindExistingNode(XN_NODE_TYPE_IMAGE, niImageGenerator);
+	    if (niRetVal != XN_STATUS_OK)
+	    {
+		    printf("No image node exists! Check your XML.");
+	    }
     }
     virtual ~Nikaros() {}
 
