@@ -129,17 +129,17 @@ PrioMod::Tick(){
     bool headExists = false;
     bool handExists = false;
     
-    if (head_center[0] > 0.00000000001f) {
+    if (head_center[0] > 0.1f) {
         headMarker = attendedMarker(head_center, head_front, headPoseAttendMaxDist);
         headExists = true;
     } 
     
-    if (hand_center[0] > 0.00000000001f) {
+    if (hand_center[0] > 0.1f) {
         handMarker = attendedMarker(hand_center, hand_front, handPoseAttendMaxDist);
         handExists = true;
     }
     
-    if (false == handExists && false == headExists) {
+    if (false == headExists && false == handExists) {
         lookAtDefault();
     }
     
@@ -176,7 +176,7 @@ PrioMod::Tick(){
             if (headMarker == handMarker) {
                 lookAtMarker(headMarker);
             } else {
-                lookAtDefault();
+                lookAtHead();
             }
         }
     }
