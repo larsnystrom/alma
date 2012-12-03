@@ -58,6 +58,7 @@ static const char* const	cGestures[] =
 // Statics
 //---------------------------------------------------------------------------
 XnListT<HandTracker*>	HandTracker::sm_Instances;
+bool HandTracker::waveFound = false;
 
 
 //---------------------------------------------------------------------------
@@ -76,6 +77,10 @@ void XN_CALLBACK_TYPE HandTracker::Gesture_Recognized(	xn::GestureGenerator&	/*g
 	{
 		printf("Dead HandTracker: skipped!\n");
 		return;
+	}
+	
+	if (strcmp("Wave", strGesture) == 0) {
+	    waveFound = true;
 	}
 
 	pThis->m_HandsGenerator.StartTracking(*pEndPosition);
@@ -163,6 +168,13 @@ HandTracker::~HandTracker()
 	XnListT<HandTracker*>::ConstIterator it = sm_Instances.Find(this);
 	assert(it != sm_Instances.End());
 	sm_Instances.Remove(it);
+}
+
+bool HandTracker::PopWave()
+{
+    bool tmpWave = HandTracker::waveFound;
+    HandTracker::waveFound = false;
+    return tmpWave;
 }
 
 XnStatus HandTracker::Init()

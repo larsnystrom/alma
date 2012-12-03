@@ -34,6 +34,7 @@ class HandPoint: public Module
 public:
     float *     handPoint;
     float *     handPointView;
+    float *     waveFound;
     static Module * Create(Parameter * p) { return new HandPoint(p); }
 
     HandPoint(Parameter * p) : Module(p) 

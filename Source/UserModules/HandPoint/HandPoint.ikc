@@ -19,6 +19,7 @@
 
 	<module class="HandPoint" />
 	
+	<output name="WAVE_FOUND" description="1 if wave gesture recognized since last tick." size="1" />
 	<output name="HAND_POINT" description="Position of hand" size="3" />
 	<output name="HAND_POINT_VIEW" description="Position of hand (x, y)" size="2" />
 

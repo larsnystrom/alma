@@ -30,6 +30,7 @@ HandPoint::Init()
 {
     handPoint = GetOutputArray("HAND_POINT");   
     handPointView = GetOutputArray("HAND_POINT_VIEW");    
+    waveFound = GetOutputArray("WAVE_FOUND");
     
     OpenNi& on = OpenNi::getInstance();
     on.StartGeneratingAll();
@@ -64,38 +65,40 @@ HandPoint::Tick()
 	typedef History::ConstIterator	HistoryIterator;
 	typedef Trail::ConstIterator	TrailIterator;
 
-	static const float colours[][3] =
-	{
-		{ 0.5f, 0.5f, 0.5f},
-		{ 0.0f, 1.0f, 0.0f},
-		{ 0.0f, 0.5f, 1.0f},
-		{ 1.0f, 1.0f, 0.0f},
-		{ 1.0f, 0.5f, 0.0f},
-		{ 1.0f, 0.0f, 1.0f}
-	};
 	const TrailHistory&	history = m_HandTracker->GetHistory();
-
-	// History points coordinates buffer
-	XnFloat	coordinates[3 * MAX_HAND_TRAIL_LENGTH];
-
-	const HistoryIterator	hend = history.End();
-	for(HistoryIterator		hit = history.Begin(); hit != hend; ++hit)
-	{
-		// Dump the history to local buffer
-		const Trail&	trail = hit->Value();
-		
-		TrailIterator last = trail.Begin();
-		XnPoint3D point = *last;
-		
-		handPoint[0] = xCon(point.X, point.Z) / 640.f;
-		handPoint[1] = yCon(-point.Y, point.Z) / 480.f;
-		handPoint[2] = point.Z / 1000.f;
-		
-		handPointView[0] = handPoint[0];
-		handPointView[1] = handPoint[1];
-		
-		printf("HandPoint: (%f, %f, %f)\t\t(%f, %f, %f)\n", point.X, point.Y, point.Z, handPoint[0], handPoint[1], handPoint[2]);
-	}
+	
+	bool waveGesture = m_HandTracker->PopWave();
+	if (waveGesture) {
+	    waveFound[0] = 1.f;
+    } else {
+        waveFound[0] = 0.f;
+    }
+	
+	if (history.End() != history.Begin()) {
+	    const HistoryIterator hend = history.End();
+	    HistoryIterator	hit = history.End();
+	    hit--;
+	
+	
+	    // Dump the history to local buffer
+	    const Trail&	trail = hit->Value();
+	
+	    TrailIterator last = trail.Begin();
+	    XnPoint3D point = *last;
+	
+	    handPoint[0] = xCon(point.X, point.Z) / 640.f;
+	    handPoint[1] = yCon(-point.Y, point.Z) / 480.f;
+	    handPoint[2] = point.Z / 1000.f;
+	
+//	    printf("HandPoint: (%f, %f, %f)\t\t(%f, %f, %f)\n", point.X, point.Y, point.Z, handPoint[0], handPoint[1], handPoint[2]);
+    } else {
+        handPoint[0] = 0.f;
+	    handPoint[1] = 0.f;
+	    handPoint[2] = 0.f;
+    }
+    
+    handPointView[0] = handPoint[0];
+    handPointView[1] = handPoint[1];
 }
 
 

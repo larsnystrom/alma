@@ -40,6 +40,8 @@ public:
 
 	XnStatus Init();
 	XnStatus Run();
+	
+	bool PopWave();
 
 	const TrailHistory&	GetHistory()	const	{return m_History;}
 
@@ -79,6 +81,8 @@ private:
 
 private:
 	XN_DISABLE_COPY_AND_ASSIGN(HandTracker);
+	
+	static bool waveFound;
 };
 
 #endif //NI_HAND_TRACKER_H__
