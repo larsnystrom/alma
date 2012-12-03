@@ -89,6 +89,7 @@ PrioMod::lookAtHand()
     attended[0] = hand_center[0];
     attended[1] = hand_center[1];
     attended[2] = hand_center[2];
+    waveAttCounter--;
 }
 
 void
@@ -120,6 +121,10 @@ PrioMod::Init(){
     
     attended = GetOutputArray("ATTENDED");
     attendedView = GetOutputArray("ATTENDED_VIEW");
+    
+    waveAttCounter = 0;
+    prevHandMarker = -1;
+    prevHeadMarker = -1;
 }
 
 void
@@ -139,51 +144,78 @@ PrioMod::Tick(){
         handExists = true;
     }
     
-    if (false == headExists && false == handExists) {
-        lookAtDefault();
+    if (hand_wave[0] > 0.1f) {
+        waveAttCounter = 20;
     }
     
-    if (true == headExists && false == handExists) {
-        if (-1 != headMarker) {
-            lookAtMarker(headMarker);
-        } else {
-            lookAtHead();
-        }
-    }
-    
-    if (false == headExists && true == handExists) {
-        if (-1 != handMarker) {
-            lookAtMarker(handMarker);
-        } else {
+    if (waveAttCounter > 0) {
+        lookAtHand();
+    } else {
+        
+        if (false == headExists && false == handExists) {
             lookAtDefault();
         }
-    }
-    
-    if (true == headExists && true == handExists) {
-        if (-1 == headMarker && -1 == handMarker) {
-            lookAtHead();
-        }
         
-        if (-1 == headMarker && -1 != handMarker) {
-            lookAtMarker(handMarker);
-        }
-        
-        if (-1 != headMarker && -1 == handMarker) {
-            lookAtMarker(headMarker);
-        }
-        
-        if (-1 != headMarker && -1 != handMarker) {
-            if (headMarker == handMarker) {
+        if (true == headExists && false == handExists) {
+            if (-1 != headMarker) {
                 lookAtMarker(headMarker);
             } else {
                 lookAtHead();
+            }
+        }
+        
+        if (false == headExists && true == handExists) {
+            if (-1 != handMarker) {
+                lookAtMarker(handMarker);
+            } else {
+                lookAtDefault();
+            }
+        }
+        
+        if (true == headExists && true == handExists) {
+            if (-1 == headMarker && -1 == handMarker) {
+                lookAtHead();
+            }
+            
+            if (-1 == headMarker && -1 != handMarker) {
+                lookAtMarker(handMarker);
+            }
+            
+            if (-1 != headMarker && -1 == handMarker) {
+                lookAtMarker(headMarker);
+            }
+            
+            if (-1 != headMarker && -1 != handMarker) {
+                if (headMarker == handMarker) {
+                    lookAtMarker(headMarker);
+                } else {
+                    if (prevHeadMarker != headMarker && prevHandMarker != handMarker) {
+                        // Hand pointing has precedence
+                        lookAtMarker(handMarker);
+                    }
+                    
+                    if (prevHeadMarker == headMarker && prevHandMarker != handMarker) {
+                        lookAtMarker(handMarker);
+                    }
+                    
+                    if (prevHeadMarker != headMarker && prevHandMarker == handMarker) {
+                        lookAtMarker(headMarker);
+                    }
+                    
+                    if (prevHeadMarker == headMarker && prevHandMarker == handMarker) {
+                        // Hand pointing has precedence
+                        lookAtMarker(handMarker);
+                    }
+                }
             }
         }
     }
     
     attendedView[0] = attended[0];
     attendedView[1] = attended[1];
-  
+    
+    prevHandMarker = handMarker;
+    prevHeadMarker = headMarker;
 }
 
 static InitClass init("PrioMod", &PrioMod::Create, "Source/UserModules/PrioMod/");

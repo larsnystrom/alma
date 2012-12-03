@@ -30,8 +30,11 @@ public:
     float * hand_wave;
     float * attendedView;
 private:
-    float headPoseAttendMaxDist;
-    float handPoseAttendMaxDist;
+    float   headPoseAttendMaxDist;
+    float   handPoseAttendMaxDist;
+    int     waveAttCounter;
+    int     prevHandMarker;
+    int     prevHeadMarker;
     
     void lookAtDefault();
     void lookAtHead();
