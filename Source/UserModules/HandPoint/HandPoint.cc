@@ -92,9 +92,9 @@ HandPoint::Tick()
 	
 //	    printf("HandPoint: (%f, %f, %f)\t\t(%f, %f, %f)\n", point.X, point.Y, point.Z, handPoint[0], handPoint[1], handPoint[2]);
     } else {
-        handPoint[0] = 0.f;
-	    handPoint[1] = 0.f;
-	    handPoint[2] = 0.f;
+        handPoint[0] = 0.0f;
+	    handPoint[1] = 0.0f;
+	    handPoint[2] = 0.0f;
     }
     
     handPointView[0] = handPoint[0];

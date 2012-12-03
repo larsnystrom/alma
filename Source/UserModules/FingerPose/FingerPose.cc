@@ -16,7 +16,7 @@ FingerPose::Init()
 void
 FingerPose::Tick()
 {
-    if (fabsf(hp[0] - 0.f) < 0.00000000001f) {
+    if (hp[0] < 0.1f) {
         vp1[0] = 0.f;
         vp1[1] = 0.f;
         vp2[0] = 0.f;
