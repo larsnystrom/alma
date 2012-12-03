@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<group name="PrioModClosest" description="A module for selecting pointing cue">
+
+  <description type="text">
+    The purpose of PrioModClosest is to produce one pair of coordinates from an array of several.
+    The chosen coordinates should be the coordinates for the object that someone is attending.
+  </description>
+
+  <example description="A simple example">
+    <module
+	class="PrioModClosest"
+	name="PrioModClosest"
+	/>
+  </example>
+
+  <input name="ATTENDABLES" description="Table where each row descibes a detected marker: camera position (2 columns), id (1 column), confidence (1 columns), edges (8 columns), transformation matrix (16 columns)" size_x="28" size_param_y="max_markers" />
+  <input name="CLOSEST" description="The closest point" size="2" />
+  <output name="ATTENDED" description="The attended object" size="3" />
+
+  <module class="PrioModClosest" />
+
+  <author>
+  </author>
+
+  <files>
+    <file>PrioModClosest.h</file>
+    <file>PrioModClosest.cc</file>
+    <file>PrioModClosest.ikc</file>
+  </files>
+
+</group>
+
