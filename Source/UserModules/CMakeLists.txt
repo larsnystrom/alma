@@ -15,8 +15,10 @@ add_subdirectory(ColPick)
 add_subdirectory(Nikaros)
 add_subdirectory(OpenNi)
 add_subdirectory(MarkerMemory)
-#add_subdirectory(SetKinect)
+add_subdirectory(SetKinect)
 add_subdirectory(HandPoint)
+add_subdirectory(FingerPose)
+
 
 
 set(SOURCE ${SOURCE} PARENT_SCOPE)
