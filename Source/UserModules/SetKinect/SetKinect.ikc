@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<group name="SetKinect" description="Initiating the Kinect.">
+
+    <description type="text">
+        Initiating the Kinect.
+    </description>
+
+    <example description="A simple example">
+        <module
+            class="SetKinect"
+            name="SetKinect"
+        />
+    </example>
+
+    <input name="TILT" description="Tilt of Kinect in degrees (-30, 0, 30)" size="1" />
+    <input name="LED" description="LED behaviour" size="1" />
+
+    <module class="SetKinect" />
+
+    <author>
+        <!--name>Christian Balkenius</name-->
+        <!--email>christian.balkenius@lucs.lu.se</email-->
+        <!--affiliation>Lund University Cognitive Science</affiliation-->
+        <!--homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage-->
+    </author>
+
+    <files>
+        <file>SetKinect.h</file>
+        <file>SetKinect.cc</file>
+        <file>SetKinect.ikc</file>
+    </files>
+
+</group>
+
