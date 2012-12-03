@@ -17,7 +17,7 @@
     </example>
   
     <parameter name="max_markers" type="int" default="10" description="Maximum number of markers to attend." />
-    <parameter name="HEAD_ATTEND_MAX_DIST" type="float" default="0.5" description="Head Pose attention treshold." />
+    <parameter name="HEAD_ATTEND_MAX_DIST" type="float" default="0.5" description="Head Pose attention threshold." />
 
     <input 
         name="ATTENDABLES" 
@@ -28,9 +28,6 @@
 
     <input name="HEAD_CENTER" description="Head Center" size="3" />
     <input name="HEAD_FRONT" description="Head Front" size="3" />
-
-    <input name="CLOSEST" description="The closest point" size="2" />
-    
 
     <output name="ATTENDED" description="The attended object" size="3" />
     <output name="ATTENDED_VIEW" description="The attended object" size="2" />

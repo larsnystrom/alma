@@ -41,8 +41,8 @@ PrioModHead::linePlaneIntersect(
 void
 PrioModHead::Init(){
     maxMarkers = GetIntValue("max_markers");
-    headPoseAttendMaxDist = GetFloatValue("HEAD_ATTEND_MAX_DIST");
     
+    headPoseAttendMaxDist = GetFloatValue("HEAD_ATTEND_MAX_DIST");   
     printf("PrioModHead: HEAD_ATTEND_MAX_DIST=%f\n", headPoseAttendMaxDist);
     
     markers = GetInputMatrix("ATTENDABLES");
@@ -55,50 +55,54 @@ PrioModHead::Init(){
 
 void
 PrioModHead::Tick(){
-    float curDist = 0.0f;
-    float minDist = headPoseAttendMaxDist;
-    int prioMarker = -1;
-    for (int i = 0; i < maxMarkers; ++i) {
-        
-        if (markers[i][2] > 0.1f) {
-            curDist = linePlaneIntersect(
-                head_center[0], head_center[1], head_center[2], 
-                head_front[0], head_front[1], head_front[2],
-                markers[i][0], markers[i][1], markers[i][23] / 1000.f
-            );
-            
-            if (curDist < minDist) {
-                prioMarker = i;
-                minDist = curDist;
-            }
-        }
-    }
-    if (prioMarker != -1) {
-        printf(
-            "MarkerAttended[%f] (x, y, z): (%f, %f, %f)\n", 
-            markers[prioMarker][2], markers[prioMarker][0], 
-            markers[prioMarker][1], markers[prioMarker][23] / 1000.f
-        );
-        
-        attended[0] = markers[prioMarker][0];
-        attended[1] = markers[prioMarker][1];
-        attended[2] = markers[prioMarker][23] / 1000.f;
-    } else {
-        attended[0] = head_center[0];
-        attended[1] = head_center[1];
-        attended[2] = head_center[2];
-        printf(
-            "MarkerNotAttended: Looking at head(%f, %f, %f)\n",
-            attended[0], attended[1], attended[2]
-        );
-        
-//        attended[0] = 0.5f;
-//        attended[1] = 0.8f;
-//        attended[2] = 2.0f;
+    if (head_center[0] < 0.00000000001f) {
+        attended[0] = 0.5f;
+        attended[1] = 0.5f;
+        attended[2] = 2.0f;
 //        printf(
 //            "MarkerNotAttended: Looking forward(%f, %f, %f)\n",
 //            attended[0], attended[1], attended[2]
 //        );
+        
+    } else {
+        float curDist = 0.0f;
+        float minDist = headPoseAttendMaxDist;
+        int prioMarker = -1;
+        for (int i = 0; i < maxMarkers; ++i) {
+            
+            if (markers[i][2] > 0.1f) {
+                curDist = linePlaneIntersect(
+                    head_center[0], head_center[1], head_center[2], 
+                    head_front[0], head_front[1], head_front[2],
+                    markers[i][0], markers[i][1], markers[i][23] / 1000.f
+                );
+                
+                if (curDist < minDist) {
+                    prioMarker = i;
+                    minDist = curDist;
+                }
+            }
+        }
+        if (prioMarker != -1) {
+    //        printf(
+    //            "MarkerAttended[%f] (x, y, z): (%f, %f, %f)\n", 
+    //            markers[prioMarker][2], markers[prioMarker][0], 
+    //            markers[prioMarker][1], markers[prioMarker][23] / 1000.f
+    //        );
+            
+            attended[0] = markers[prioMarker][0];
+            attended[1] = markers[prioMarker][1];
+            attended[2] = markers[prioMarker][23] / 1000.f;
+        } else {
+            attended[0] = head_center[0];
+            attended[1] = head_center[1];
+            attended[2] = head_center[2];
+    //        printf(
+    //            "MarkerNotAttended: Looking at head(%f, %f, %f)\n",
+    //            attended[0], attended[1], attended[2]
+    //        );
+            
+        }
     }
     
     attendedView[0] = attended[0];
