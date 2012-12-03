@@ -6,8 +6,8 @@ void
 FingerPose::Init()
 {
   depth = GetInputMatrix("DEPTH");
-  pvh = GetOutputMatrix("POINT_VECTOR_HAND");
-  pvf = GetOutputMatrix("POINT_VECTOR_FINGER");
+  pvh = GetOutputArray("POINT_VECTOR_HAND");
+  pvf = GetOutputArray("POINT_VECTOR_FINGER");
   hp = GetInputArray("HAND_POSITION");
   vp1 = GetOutputArray("VP1");
   vp2 = GetOutputArray("VP2");
@@ -16,12 +16,24 @@ FingerPose::Init()
 void
 FingerPose::Tick()
 {
+    if (fabsf(hp[0] - 0.f) < 0.00000000001f) {
+        vp1[0] = 0.f;
+        vp1[1] = 0.f;
+        vp2[0] = 0.f;
+        vp2[1] = 0.f;
+//        printf(
+//            "MarkerNotAttended: Looking forward(%f, %f, %f)\n",
+//            attended[0], attended[1], attended[2]
+//        );
+        return;
+    }
+    
   pvh[0] = hp[0];
   pvh[1] = hp[1];
   pvh[2] = hp[2];
   //pvh[2] = hp[23]/1000;
 
-  float fl = 0.15;
+  float fl = 0.10;
   float r = fl/((hp[2])*tan(0.4974));
   //float r = fl/((hp[23]/1000)*tan(0.4974));
 
