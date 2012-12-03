@@ -59,6 +59,7 @@ static const char* const	cGestures[] =
 //---------------------------------------------------------------------------
 XnListT<HandTracker*>	HandTracker::sm_Instances;
 bool HandTracker::waveFound = false;
+int HandTracker::handStack = 0;
 
 
 //---------------------------------------------------------------------------
@@ -94,6 +95,8 @@ void XN_CALLBACK_TYPE HandTracker::Hand_Create(	xn::HandsGenerator& /*generator*
 {
 	printf("New Hand: %d @ (%f,%f,%f)\n", nId, pPosition->X, pPosition->Y, pPosition->Z);
 
+    handStack++;    
+    
 	HandTracker*	pThis = static_cast<HandTracker*>(pCookie);
 	if(sm_Instances.Find(pThis) == sm_Instances.End())
 	{
@@ -134,6 +137,8 @@ void XN_CALLBACK_TYPE HandTracker::Hand_Destroy(	xn::HandsGenerator& /*generator
 													void*				pCookie)
 {
 	printf("Lost Hand: %d\n", nId);
+	
+	handStack--;
 
 	HandTracker*	pThis = static_cast<HandTracker*>(pCookie);
 	if(sm_Instances.Find(pThis) == sm_Instances.End())

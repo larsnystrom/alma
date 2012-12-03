@@ -74,7 +74,7 @@ HandPoint::Tick()
         waveFound[0] = 0.f;
     }
 	
-	if (history.End() != history.Begin()) {
+	if (HandTracker::handStack > 0) {
 	    const HistoryIterator hend = history.End();
 	    HistoryIterator	hit = history.End();
 	    hit--;

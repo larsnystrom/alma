@@ -44,6 +44,8 @@ public:
 	bool PopWave();
 
 	const TrailHistory&	GetHistory()	const	{return m_History;}
+	
+	static int handStack;
 
 private:
 	// OpenNI Gesture and Hands Generator callbacks
