@@ -230,6 +230,17 @@ HeadPose::Tick()
             );
 	    */
 	    }
+    } else {
+        out_head_center[0] = 0.f;
+        out_head_center[1] = 0.f;
+        out_head_center[2] = 0.f;
+        out_head_front[0] = 0.f;
+        out_head_front[1] = 0.f;
+        out_head_front[2] = 0.f;
+        out_head_center2[0] = 0.f;
+        out_head_center2[1] = 0.f;
+        out_head_front2[0] = 0.f;
+        out_head_front2[1] = 0.f;
     }
 }
 

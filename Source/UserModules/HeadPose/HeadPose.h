@@ -34,17 +34,10 @@ public:
         OpenNi& on = OpenNi::getInstance();
         xnContext = on.getContext();
         
-        xnRetVal = xnDepthGenerator.Create(xnContext);
-        if (xnRetVal != XN_STATUS_OK)
-	        printf("Failed creating DEPTH generator %s\n", xnGetStatusString(xnRetVal));
-
-        XnMapOutputMode outputMode;
-        outputMode.nXRes = hpImW;
-        outputMode.nYRes = hpImH;
-        outputMode.nFPS = hpFps;
-        xnRetVal = xnDepthGenerator.SetMapOutputMode(outputMode);
-        if (xnRetVal != XN_STATUS_OK)
-	        printf("Failed setting the DEPTH output mode %s\n", xnGetStatusString(xnRetVal));
+        xnRetVal = xnContext.FindExistingNode(XN_NODE_TYPE_DEPTH, xnDepthGenerator);
+	    if (xnRetVal != XN_STATUS_OK) {
+		    printf("No depth node exists! Check your XML.");
+	    }
     }
     virtual ~HeadPose() {}
 
