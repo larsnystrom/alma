@@ -30,16 +30,14 @@ ArmPoint::Tick()
 
     if (PP[2] > 0.0f) {
         d = PP[2];
-        printf("ArmPoint: Using input z=%f.\n", d);
+//        printf("ArmPoint: Using input z=%f.\n", d);
     } else if (depth[y][x] < 0.9999 && depth[y][x] > 0){//if raw data from kinect
         d = depth[y][x];
-        //d = 1.0 / (d*1023 * -0.0030711016 + 3.3309495161);//Probably not so good
-        //d = 0.1236 * tanf(d*1023/2842.5 + 1.1863);
-        //d=348/(1091.5-d*1023);
         d = 0.1236 * tanf(d*2047/2842.5 + 1.1863);
         printf("ArmPoint: Using raw z=%f.\n", d);
     } else if (depth[y][x] > 1.0f){//if mm data from kinect
         d = depth[y][x] / 1000.0f;
+        
         printf("ArmPoint: Using mm z=%f.\n", d);
     }
 
