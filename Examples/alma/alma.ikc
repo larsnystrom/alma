@@ -1,0 +1,278 @@
+<?xml version = "1.0"?>
+
+<group title = "Nikaros">
+    <description>
+        This is an example file for using the LUCS MAMN10 Robot arm in ikaros.
+    </description>
+    
+    <module
+        class="Nikaros"
+        name="Nikaros"
+    />
+    
+    <module
+        class="HandPoint"
+        name="HandPoint"
+    />
+    
+    <module
+        class = "MarkerTracker"
+        name = "MarkerTracker"			
+    />
+    
+    
+    <module
+        class = "MarkerMemory"
+        name = "MarkerMemory"			
+    />
+    
+    <module
+        class="FingerPose"
+        name="FingerPose"
+    />
+    
+    <module
+        class="HeadPose"
+        name="HeadPose"
+    />
+    
+    <module
+        class="PrioMod"
+        name="PrioMod"
+    />
+	<parameter 
+	    name="HEADPOSE_DIST_TRESHOLD" 
+	    target="HEAD_ATTEND_MAX_DIST" 
+	    targetmodule="PrioMod" 
+	    default="2.0" 
+    />
+	<parameter 
+	    name="HANDPOSE_DIST_TRESHOLD" 
+	    target="HAND_ATTEND_MAX_DIST" 
+	    targetmodule="PrioMod" 
+	    default="0.9" 
+    />
+   
+    <module
+        class = "Dynamixel"
+        name = "Dynamixel"
+        _device = "/dev/cu.usbserial-A600cUuc"
+        device = "/dev/ttyUSB0"
+        index_mode = "indirect"
+        servo_id = "1 2 3"
+        angle_unit = "degrees"
+    />
+
+    <module
+        class = "Constant"
+        name = "Speed"
+        outputsize = "3"
+        data = "0.08 0.08 0.08"
+    />
+    
+    <module
+        class = "ArmPoint"
+        name = "ArmPoint"
+    />
+	<parameter 
+	    name="kinect_tilt" 
+	    target="TILT" 
+	    targetmodule="ArmPoint" 
+	    default="0" 
+    />
+    
+    <connection 
+        sourcemodule = "Nikaros" source = "INTENSITY" 
+        targetmodule = "MarkerTracker" target = "INPUT" 
+        delay="0" 
+    />
+    
+    
+    <connection 
+        sourcemodule = "MarkerTracker" source = "MARKERS" 
+        targetmodule = "MarkerMemory" target = "MARKERS" 
+        delay="0" 
+    />
+    
+    <connection 
+        sourcemodule = "Nikaros" source = "DEPTH" 
+        targetmodule = "FingerPose" target = "DEPTH" 
+        delay="0" 
+    />
+    <connection 
+        sourcemodule = "HandPoint" source = "HAND_POINT" 
+        targetmodule = "FingerPose" target = "HAND_POSITION" 
+        delay="0" 
+    />
+    
+    
+    <connection 
+        sourcemodule = "FingerPose" source = "POINT_VECTOR_HAND" 
+        targetmodule = "PrioMod" target = "HAND_FRONT" 
+        delay="0" 
+    />
+    <connection 
+        sourcemodule = "FingerPose" source = "POINT_VECTOR_FINGER" 
+        targetmodule = "PrioMod" target = "HAND_CENTER" 
+        delay="0" 
+    />
+    <connection 
+        sourcemodule = "HandPoint" source = "WAVE_FOUND" 
+        targetmodule = "PrioMod" target = "HAND_WAVE" 
+        delay="1" 
+    />
+    <connection 
+        sourcemodule = "HeadPose" source = "HEAD_FRONT" 
+        targetmodule = "PrioMod" target = "HEAD_FRONT" 
+        delay="0" 
+    />
+    <connection 
+        sourcemodule = "HeadPose" source = "HEAD_CENTER" 
+        targetmodule = "PrioMod" target = "HEAD_CENTER" 
+        delay="0" 
+    />
+    <connection 
+        sourcemodule = "MarkerMemory" source = "MEMORY" 
+        targetmodule = "PrioMod" target = "ATTENDABLES" 
+        delay="0" 
+    />
+    
+    <connection 
+        sourcemodule = "Nikaros" source = "DEPTH" 
+        targetmodule = "ArmPoint" target = "depth" 
+        delay="0" 
+    />
+    <connection 
+        sourcemodule = "PrioMod" source = "ATTENDED" 
+        targetmodule = "ArmPoint" target = "POINT_POSITION" 
+        delay="0" 
+    />
+    
+    <connection 
+        sourcemodule = "ArmPoint" source = "Positions" 
+        targetmodule = "Dynamixel" target = "GOAL_POSITION" 
+        delay="0" 
+    />
+    <connection 
+        sourcemodule = "Speed" source = "OUTPUT" 
+        targetmodule = "Dynamixel" target = "MOVING_SPEED" 
+    />
+    
+    <view name = "MAMN19" object_size = "50" >
+        <object
+            class = "Image"
+            title = "Kinect RGB camera"
+            type = "rgb"
+            module = "Nikaros"
+            source = "RED+GREEN+BLUE"
+            x = "6" y = "0"
+            w = "6" h = "5"
+            min = "0"
+            max = "1"
+        />
+        
+        <object
+            class = "Circle"
+            color = "red"
+            size = "0.025"
+            module = "HandPoint"
+            source = "HAND_POINT_VIEW"
+            x = "6" y = "0"
+            w = "6" h = "5"
+        />
+        
+        
+        <object
+            class = "Cross"
+            module = "MarkerTracker"
+            source = "MARKERS"
+            size = "0.03"
+            stroke_width="1"
+            x = "6" y = "0"
+            w = "6" h = "5"
+            min = "0"
+            max = "1"
+        />
+        
+        
+        <object
+            class = "Label"
+            type = "value"
+            select = "2"
+            decimals = "0"
+            offset_x = "0.05"
+            offset_y = "0.05"
+            module = "MarkerTracker"
+            source = "MARKERS"
+            x = "6" y = "0"
+            w = "6" h = "5"
+        />
+        
+        
+        
+        <object
+            class = "Cross"
+            module = "MarkerMemory"
+            source = "MEMORY"
+            size = "0.03"
+            stroke_width="1"
+            color="red"
+            x = "6" y = "0"
+            w = "6" h = "5"
+            min = "0"
+            max = "1"
+        />
+        
+        
+        <object
+            class = "Circle"
+            color = "red"
+            size = "0.025"
+            module = "FingerPose"
+            source = "VP1"
+            x = "6" y = "0"
+            w = "6" h = "5"
+        />
+
+        <object
+            class = "Circle"
+            color = "green"
+            size = "0.025"
+            module = "FingerPose"
+            source = "VP2"
+            x = "6" y = "0"
+            w = "6" h = "5"
+        />
+        
+        
+        <object
+            class = "Circle"
+            color = "yellow"
+            size = "0.025"
+            module = "PrioMod"
+            source = "ATTENDED_VIEW"
+            x = "6" y = "0"
+            w = "6" h = "5"
+        />
+        
+        
+        <object
+            class = "Circle"
+            color = "blue"
+            size = "0.025"
+            module = "HeadPose"
+            source = "HEAD_CENTER2"
+            x = "6" y = "0"
+            w = "6" h = "5"
+        />
+        <object
+            class = "Circle"
+            color = "pink"
+            size = "0.025"
+            module = "HeadPose"
+            source = "HEAD_FRONT2"
+            x = "6" y = "0"
+            w = "6" h = "5"
+        />
+    </view>
+</group>
