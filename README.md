@@ -38,6 +38,14 @@ OpenNI, NITE and SensorKienct are all installed using the same procedure. Start 
 sudo ./install.sh
 ```
 
+There is one bug in OpenNI which will cause problems later on when you are going to compile ALMA. There is some deprecated code in `/usr/include/ni/XnPlatform.h` which will make OpenNI unable to detect your Linux OS. To fix this bug you have to change `linux` to `__linux__` and `i386` to `__i386__` in the mentioned file. Four of the lines should look like this:
+
+    #elif (__linux__ && (__i386__ || __x86_64__))
+        #include "Linux-x86/XnPlatformLinux-x86.h"
+    #elif (__linux__ && __arm__)
+        #include "Linux-Arm/XnPlatformLinux-Arm.h"
+
+
 
 Compiling ALMA (Linux)
 -----------------
