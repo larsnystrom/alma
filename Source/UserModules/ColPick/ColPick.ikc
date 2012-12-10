@@ -3,7 +3,7 @@
 <group name="ColPick" description="picking a column from a matrix">
 
   <description type="text">
-    ...
+    This is just a tool for evaluating pictures on eyes.
   </description>
 
   <example description="A simple example">

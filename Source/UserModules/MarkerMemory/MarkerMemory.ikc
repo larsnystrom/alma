@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
 
-<group name="MarkerMemory" description="minimal example module">
+<group name="MarkerMemory" description="Memory of tracked markers">
 
 	<description type="text">
-		Minimal module that can be used as a start for a new module.
-		Simply change all occurrences of "MarkerMemory" to the name of your new module in
-		MarkerMemory.cc, MarkerMemory.h and MarkerMemory.ikc (this file), rename the files, and fill
-		in the new code and documentation. This module is located in the
-		UserModules directory.
+	  This module remember tracked markers, so that occluded markers can be used.
 	</description>
 
 	<example description="A simple example">
@@ -36,10 +32,6 @@
     />
 
 	<author>
-		<name>Christian Balkenius</name>
-		<email>christian.balkenius@lucs.lu.se</email>
-		<affiliation>Lund University Cognitive Science</affiliation>
-		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
 	</author>
 
    <files>

@@ -3,7 +3,7 @@
 <group name="TickCounter" description="Tick counter">
 
 	<description type="text">
-		Counts ticks.
+		Count ticks.
 	</description>
 
 	<module class="TickCounter" />

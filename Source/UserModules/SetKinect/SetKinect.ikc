@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<group name="SetKinect" description="Initiating the Kinect.">
+<group name="SetKinect" description="Initiating the Kinect">
 
     <description type="text">
         Initiating the Kinect.
@@ -19,10 +19,6 @@
     <module class="SetKinect" />
 
     <author>
-        <!--name>Christian Balkenius</name-->
-        <!--email>christian.balkenius@lucs.lu.se</email-->
-        <!--affiliation>Lund University Cognitive Science</affiliation-->
-        <!--homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage-->
     </author>
 
     <files>

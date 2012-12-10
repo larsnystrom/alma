@@ -3,7 +3,7 @@
 <group name="EyeDir" description="eye direction module">
 
   <description type="text">
-    ...
+    This module will take two images of eyes, and from that do a rough estimation od the gaze-direction of the eyes.
   </description>
 
   <example description="A simple example">

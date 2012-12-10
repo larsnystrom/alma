@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 
-<group name="FingerPose" description="None">
+<group name="FingerPose" description="Finds a pointing vector">
+
+  <description type="text">
+    This module crops the area round the input coordinates, and finds the closest point to the camera within that region. If the input is the coordinates of a hand, the two sets of coordinates in the output will often lie approximatly on the line of pointing.
+  </description>
 
   <example description="A simple example">
     <module

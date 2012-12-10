@@ -3,7 +3,7 @@
 <group name="HeadPose" description="Head Pose Estimation">
 
 	<description type="text">
-		Head Pose Estimation.
+	  This module detect heads, and sends out the coordinates for the center of the head, and the coordinate of a point directly in front of the face.
 	</description>
 
 	<module class="HeadPose" />
@@ -14,10 +14,6 @@
 	<output name="HEAD_FRONT2" description="Position of head front" size="2" />
 
 	<author>
-		<name>Christian Balkenius</name>
-		<email>christian.balkenius@lucs.lu.se</email>
-		<affiliation>Lund University Cognitive Science</affiliation>
-		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
 	</author>
 
    <files>

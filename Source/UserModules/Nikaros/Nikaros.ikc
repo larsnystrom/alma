@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<group name="Nikaros" description="minimal example module">
+<group name="Nikaros" description="OpenNi &lt;3 Ikaros">
 
 	<description type="text">
-		OpenNi &lt;3 Ikaros
+	  This module get data from a Kinect via OpenNi, and passes it to other modules.
 	</description>
 
 
