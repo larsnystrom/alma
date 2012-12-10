@@ -3,7 +3,7 @@ ALMA ReadMe
 This is Attention Laser Mechagodzilla Arm.
 
 
-Ikaros (Linux)
+Ikaros
 -----------------
 ALMA runs within the Ikaros infrastructure, which means that you have to install all of Ikaros' dependencies in order to run ALMA. A complete manual of how to install Ikaros can be found at [Ikaros website](http://www.ikaros-project.org/installing/).
 
